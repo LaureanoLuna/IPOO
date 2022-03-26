@@ -7,9 +7,9 @@ class Reloj{
     private $segundo;
 
     public function __construct() {
-        $this->hora = 0;
-        $this->minuto = 0;
-        $this->segundo = 0;
+        $this->hora = 23;
+        $this->minuto = 58;
+        $this->segundo = 58;
     }
 
    
@@ -61,19 +61,20 @@ class Reloj{
     }
 
 
-    public function Incremento_Reloj_Segundos($a)
+    public function Incremento_Reloj_Segundos()
     {
+        $a = $this->getSegundo() + 1;
        return  $this->setSegundo($a);
     }
 
-    public function Incremento_Reloj_Minutos($a)
+    public function Incremento_Reloj_Minutos()
     {
-        return $this->setMinuto($a);
+        return $this->setMinuto($this->getMinuto() + 1);
     }
 
-    public function Incremento_Reloj_Hora($a)
+    public function Incremento_Reloj_Hora()
     {
-        return $this->setHora($a);
+        return $this->setHora($this->getHora() + 1);
     }
 
 
