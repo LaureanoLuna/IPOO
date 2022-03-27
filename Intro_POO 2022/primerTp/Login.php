@@ -108,7 +108,7 @@ usuario, muestra la frase que permite recordar su contraseña.
         return $this;
     }
 
-       public function ValidacionPassword($nuevaClave)
+       private function ValidacionPassword($nuevaClave)
     {
         $validacion = true;
         $clavesViejas = ($this->getClavesAnteriores())["ClavesViejas"];
@@ -136,7 +136,7 @@ usuario, muestra la frase que permite recordar su contraseña.
         
        if ($nombUsuario == $this->getNombreUsuario()){
 
-        echo ($this->getFraseRecuerdaContraseña());           
+        echo "\n".($this->getFraseRecuerdaContraseña())."\n";           
            
        }else{
            echo " \nNo tiene frase para recordar clave \n";
