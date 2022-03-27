@@ -51,11 +51,3 @@ class Calculadora{
     
 }
 
-$cuenta = new Calculadora(0);
-
-$cuenta->Sumar(20,5);
-$cuenta->Multiplicar(3,3);
-
-$cuenta= new Calculadora(0);
-$cuenta -> Dividir(20,5);
-$cuenta -> Restar(6,7);
