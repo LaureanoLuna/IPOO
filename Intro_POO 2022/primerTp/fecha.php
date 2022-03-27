@@ -139,7 +139,8 @@ class Fecha{
 
     public function esBiciesto()
     {
-        return ($this->getAnio() % 4 == 0 && $this->getAnio() % 100 != 0 && $this->getAnio() % 400 == 0);
+        $resolucion = ($this->getAnio() % 4 == 0 && $this->getAnio() % 100 != 0 && $this->getAnio() % 400 == 0);
+        return ($resolucion);
     }
 
     public function Validacion_Incremento()
@@ -168,7 +169,7 @@ class Fecha{
     {
         if ($this->Validacion_Incremento() && $this->getMes() != 2)
         {
-            if ($this->Validacion_Incremento() && $this->getDia() + $dia > 30)
+            if ($this->getDia() + $dia >= 30)
             {
                 $this->setDia(($this->getDia()+ $dia) - 30);
                 if ($this->getMes() == 12)
@@ -182,7 +183,7 @@ class Fecha{
             }else{
                 $this->incrementa_un_dia($dia);
             }
-            if ($this->Validacion_Incremento() && $this->getDia() + $dia > 31)
+            if ($this->getDia() + $dia >= 31)
             {
                 $this->setDia(($this->getDia()+ $dia) - 31);
                 if ($this->getMes() == 12)
@@ -201,6 +202,12 @@ class Fecha{
         {
             $this->incrementa_un_dia($dia);
         }
+        if (!($this->esBiciesto()))
+        {
+            $this->Incremento($dia);
+        }
+
+        echo $this;
     }
 
     public function desarmaFecha($fecha)
@@ -210,10 +217,10 @@ class Fecha{
 
     public function nuevaFecha($masDias, $dd,$mm,$aaaa)
     {
+        
         $nuevaFecha = new Fecha($dd,$mm,$aaaa);
         $nuevaFecha->Incremento($masDias);
-        $nuevaFecha->FechaExtendida(); 
-             
+        echo $nuevaFecha;         
     }
     
     public function __toString()
