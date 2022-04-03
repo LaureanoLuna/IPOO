@@ -85,7 +85,7 @@ class Persona{
     /**Metodo implemetado para poder mostrar los datos de dicho objeto */
     public function __toString()
     {
-        return "\nNombre: ".($this->getPersona()["nombre"])."\n Apellido: ".($this->getPersona()["apellido"]."\n Numero de DNI: ".($this->getPersona()["DNI"]))."\n";
+        return " Nombre: ".($this->getPersona()["nombre"])."\n Apellido: ".($this->getPersona()["apellido"]."\n Numero de DNI: ".($this->getPersona()["DNI"]))."\n";
     }
 
     /**Metodo implementado que retorna un mensaje en cuyo caso fallara la creacion del objeto */

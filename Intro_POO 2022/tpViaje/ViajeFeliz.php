@@ -253,6 +253,10 @@ class ViajeFeliz{
         return "El viaje (N° ".$this->getCodigo().") con destino a ".$this->getDestino()."\ncuenta con una capacidad de ".$this->getCantMaxPers(). " pasajeros como maximo \nLos que pasajeos que viajan son: \n";
     }
     
+    public function __destruct()
+    {
+        echo "\nEl viaje se suspendio \n";
+    }
 }
 
 
