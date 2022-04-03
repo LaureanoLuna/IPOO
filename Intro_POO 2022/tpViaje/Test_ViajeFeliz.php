@@ -5,7 +5,7 @@ include('Persona.php');
 
 $per = [new Persona("Laureano","Luna",38232325),new Persona("Antonella","Giacone",36841599),new Persona("Margarita","Muñoz",16589633)];
 
-$objViaje = new ViajeFeliz(3543,"Neuquen",20,$per);
+$objViaje = new ViajeFeliz(3543,"Neuquen",3,$per);
 $x = $objViaje->getPasajeros();
 
  
@@ -44,6 +44,11 @@ switch ($opciones) {
        do {
         switch ($opc) {
             case '1':
+               if ($objViaje->estaLLeno()) {
+
+                echo "\nLa capacidad maxima de pasajeros, ya se completo \n";
+                   
+               }else{
                 echo "Nombre ";
                 $nomPasajeroNuevo = trim(fgets(STDIN));
                 echo "Apellido ";
@@ -52,6 +57,7 @@ switch ($opciones) {
                 $dniPasajeroNuevo = trim(fgets(STDIN));
 
                 $objViaje->AgregrarPasajeros($nomPasajeroNuevo,$apellidoPasajeroNuevo,$dniPasajeroNuevo);
+               }
 
                 $opcionMenu = 4;
                 break;
