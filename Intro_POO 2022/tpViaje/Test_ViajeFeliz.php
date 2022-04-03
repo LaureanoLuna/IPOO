@@ -15,11 +15,12 @@ echo "\n♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀�
 do {
     echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
 
-    echo "\n1) Ingresar un nuevo viaje \n";
-    echo "\n2) Ver los datos del viaje y los Pasajeros \n";
-    echo "\n3) Modificar los datos ya generados \n";
-    echo "\n4) Guardar los datos del viaje \n";
-    echo "\n5)Salir\n";
+    echo "\n1) Ingresar un nuevo viaje \n";// Inicializamos un nuevo objeto Persona y ViajeFeliz 
+    echo "\n2) Ver los datos del viaje y los Pasajeros \n";// una ves el objeto creado se pueden visualizar sus datos
+    echo "\n3) Modificar los datos ya generados \n";// en esta opvion se puede tener acceso a todos los atributos para settearlos
+    echo "\n4) Guardar los datos del viaje \n";// guarda el objeto Viaje Feliz en un arreglo con una clave que es el atributo codigo de viaje
+    echo "\n5) Ver los viajes ya guardados \n";// visualizamos los datos de los objetos ViajeFeliz ya creados y guardados
+    echo "\n6) Salir\n";
 
     echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
     $opciones = trim(fgets(STDIN));
@@ -94,8 +95,8 @@ switch ($opciones) {
                 echo "\n1)Agregar mas pasajeros \n";// agrega un objeto Personal al atributo del objeto viaje
                 echo "\n2)Modificar los datos de los pasajeros ya ingresados \n";// ingresa a el siguente menu para poder modificar valores especificos del objeto Persona
                 echo "\n3)Borrar algun pasajero ya ingresado \n";// borra y reacomoda los elementos del atributo para que no queden huecos
-                echo "\n4)Cambiar destino del viaje\n";// settea el atributo setDestino con un valor ingresado por teclado 
-                echo "\n5)Cambiar la capacidad del viaje\n";// settea el atributo setCapMaxPers con un valor ingresado por teclado
+                echo "\n4)Cambiar destino del viaje \n";// settea el atributo setDestino con un valor ingresado por teclado 
+                echo "\n5)Cambiar la capacidad del viaje \n";// settea el atributo setCapMaxPers con un valor ingresado por teclado
                 echo "\n6)Volver al menu anterior \n";// regresa al menu anterior
                 $opc = trim(fgets(STDIN));
 
@@ -138,10 +139,10 @@ switch ($opciones) {
                     echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
 
                     echo "\nDato que desea modificar \n";
-                    echo "\n1) Modificar nombre \n";
-                    echo "\n2) Modificar apellido \n";
-                    echo "\n3) Modificar numero de DNI \n";
-                    echo "\n4) Volver al menu anterior\n";
+                    echo "\n1) Modificar nombre \n";//Permite settear el atributo nombre del objeto
+                    echo "\n2) Modificar apellido \n";//Permite settear el atributo apellido del objeto
+                    echo "\n3) Modificar numero de DNI \n";//Permite settear el atributo DNI del objeto
+                    echo "\n4) Volver al menu anterior\n";//Vuelve a menu anterior
                     
                     $opcModificacion =trim(fgets(STDIN));
 
@@ -293,16 +294,29 @@ switch ($opciones) {
             }
         }
         break;
-    case '5':
-        $opciones = 5;
+    case '5': //visualizamos los objetos ViajesFeliz guardados en un arreglo multidimencional
+        foreach ($archivoViajes as $key => $value) {
+            echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+            echo $value;
+            $x = $value->getObjPersona();
+            $i = 1;
+            foreach ($x as $key => $value) {
+                echo $i.")".$value;
+                echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+                $i++;
+            }
+            echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+        }
         break;
+    case '6':
+        $opciones = 6;
     default:
        echo "\nIngrese una opcion correcta del menu\n";
         break;
 }
-} while ($opciones < 5);
+} while ($opciones < 6);
 
 
 
-print_r($archivoViajes); 
+//print_r($archivoViajes); 
 
