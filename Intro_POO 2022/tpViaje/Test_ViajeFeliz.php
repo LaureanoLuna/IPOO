@@ -61,6 +61,15 @@ switch ($opciones) {
 
         echo "\n¿ Desea Ingresar otro pasajero ?\n";
         $peppol = trim(fgets(STDIN));
+
+        if (count($objPersona) == $capacidadViaje){
+
+            echo "\nya se lleno el cupo de viajes \n";
+            $peppol = "no";
+
+        }
+
+        
     } while ($peppol == "si");
 
     $objViaje = new ViajeFeliz($codViaje,$destino,$capacidadViaje,$objPersona);
