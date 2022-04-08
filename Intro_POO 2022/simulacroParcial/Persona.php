@@ -27,7 +27,7 @@ class Persona{
         
     }
 
-    
+    // implementamos los metodos de acceso a los atributos
 
     /**
      * Get the value of nombrePers
@@ -149,9 +149,22 @@ class Persona{
         return $this;
     }
 
+    /**
+     * Implementamos el metodo para poder mostar los datos de la clase
+     */
+
     public function __toString()
     {
         return "\nApellido y Nombre: ".$this->getApellidoPers().", ". $this->getNombrePers()."\nNumero de DNI: ". $this->getNumeroDNI()."\nNumero de telefono: ". $this->getNumTelefono()."Domicilio: ".$this->getDireccionPers()."\nCorreo electronico: ". $this->getPersEmail();
+    }
+
+    /**
+     * Implemtentamos el metodo para casos de no funcionar la clase
+     */
+
+    public function __destruct()
+    {
+        echo "\nLa persona no esta registrada\n";
     }
 }
 ?>
