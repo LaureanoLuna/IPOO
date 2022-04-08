@@ -19,10 +19,10 @@ class CuentaBancaria{
     private $saldoActual;
     private $interesAnual;
 
-    public function __construct($numeroCuenta,$numeroDNI,$dineroActual,$interesesAnuales)
+    public function __construct($numeroCuenta,$objPersona,$dineroActual,$interesesAnuales)
     {
         $this->numCuenta = $numeroCuenta;
-        $this->dniCliente = $numeroDNI;
+        $this->dniCliente = ($objPersona->getTipoNumDNI()["numeroDNI"]);
         $this->saldoActual = $dineroActual;
         $this->interesAnual = $interesesAnuales;
 

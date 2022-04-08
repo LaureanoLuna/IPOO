@@ -16,11 +16,11 @@ $opcion = trim(fgets(STDIN));
 switch ($opcion) {
     case '1':
         
-        if ($cronometro->getSegundo() < 60) {
+        if ($cronometro->getSegundo() < 59) {
             $cronometro->Incremento_Reloj_Segundos();
-        }elseif ($cronometro->getMinuto() < 60){
+        }elseif ($cronometro->getMinuto() < 59){
             $cronometro->Incremento_Reloj_Minutos();
-        }elseif ($cronometro->getHora() < 24){
+        }elseif ($cronometro->getHora() < 23){
             $cronometro->Incremento_Reloj_Hora();
         }else{
             $cronometro->puesta_en_cero();

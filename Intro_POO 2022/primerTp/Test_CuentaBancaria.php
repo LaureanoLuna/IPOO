@@ -1,8 +1,13 @@
 <?php
 
 include('CuentaBancaria.php');
+include('../segundoTp/Persona.php');
+$n=["nombre"=>"Laureano","apellido"=>"Luna"];
+$d=["tipoDNI"=>"DNI","numeroDNI"=>38232325];
 
-$objCuenta = new CuentaBancaria(3543,38232325,50000,20);
+$objPersona = new Persona($n, $d);
+
+$objCuenta = new CuentaBancaria(3543,$objPersona,50000,20);
 
 //echo $objCuenta;
 $objCuenta->ActualizarSaldo();
