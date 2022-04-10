@@ -123,7 +123,7 @@ que deben ser aplicados.
     }
 
     /**
-     * Metodo que settea el estado de la couta se esta es pagada en su totalidad, sino resta el monto pagado setteando el monto de la cuota.
+     * Metodo que settea el estado de la cuota se esta es pagada en su totalidad, sino resta el monto pagado setteando el monto de la cuota.
      * 
      * @param int $pago
      */
@@ -138,11 +138,25 @@ que deben ser aplicados.
         }
     }
 
+    public function EstadoCuota()
+    {
+        if ($this->getEstado()){
+            $estadoCuota = "Cancelada";
+        }else{
+            $estadoCuota = "Adeuda";
+        }
+        return $estadoCuota;
+    }
+
     /**Metodo para la visualizacion de los datos de la clase */
 
     public function __toString()
     {
-        return "\nLa cuota ". $this->getNumCuota(). ", es de $". $this->getMonto_cuota(). " mas el interes que es de ". $this->getMonto_interes(). "\nEl total de la cuota es de ".$this->darMontoFinalCuota(). " y esta en estado \n";
+        return "\nLa cuota N° ". $this->getNumCuota(). 
+               "\nEs de $". $this->getMonto_cuota(). 
+               "\nEl interes es de $". $this->getMonto_interes(). 
+               "\nEl total de la cuota a abonar es de $".$this->darMontoFinalCuota().
+               "\nEstado: ". $this->EstadoCuota();
     }
 
     /**metodo por si la cuota no existe */
