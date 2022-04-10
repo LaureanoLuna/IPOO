@@ -6,7 +6,7 @@ include('Persona.php');
 $per = [new Persona("Laureano","Luna",38232325),new Persona("Josefo","Giacone",26841599),new Persona("Margarita","Muñoz",16589633)];//objeto Persona ya creado
 
 $objViaje = new ViajeFeliz(3543,"Neuquen",3,$per); //Objeto viaje ya creado
-
+$i = 0;
 //Programa principal
 
  echo "\n♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀ \n";
@@ -39,6 +39,7 @@ switch ($opciones) {
     echo "\nCapacidad de pasajeros: ";
     $capacidadViaje = trim(fgets(STDIN));
     echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+    $p = 0;
 
     do {
         echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
@@ -58,10 +59,11 @@ switch ($opciones) {
 
         echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
 
-        $objPersona[]=new Persona($nomPasajero, $apellidoPasajero, $dniPasajero);
+        $objPersona[$p]=new Persona($nomPasajero, $apellidoPasajero, $dniPasajero);
 
         echo "\n¿ Desea Ingresar otro pasajero ?\n";
         $peppol = trim(fgets(STDIN));
+        $p++;
 
         if (count($objPersona) == $capacidadViaje){
 
@@ -287,8 +289,10 @@ switch ($opciones) {
             echo "\nDesea guardar los datos en el archivo\n";
             $desicion = trim(fgets(STDIN));
             if ($desicion == "si") {
+               
                 $cod = $objViaje->getCodigo();
-                $archivoViajes[$cod] = $objViaje;
+                $archivoViajes[$i] = $objViaje;
+                $i++;
 
                 echo "\nLos datos fueron guardados\n";
             }
