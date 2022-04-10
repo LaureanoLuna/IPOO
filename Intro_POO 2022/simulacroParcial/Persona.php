@@ -15,8 +15,9 @@ class Persona{
     private $direccionPers;
     private $persEmail;
     private $numTelefono;
+    private $neto;
     
-    public function __construct($nomPersona, $apellidoPers, $numDNI, $direPers, $emailPers, $phonoPers)
+    public function __construct($nomPersona, $apellidoPers, $numDNI, $direPers, $emailPers, $phonoPers, $sueldoNeto)
     {
         $this->nombrePers = $nomPersona;
         $this->apellidoPers = $apellidoPers;
@@ -24,6 +25,7 @@ class Persona{
         $this->direccionPers = $direPers;
         $this->persEmail = $emailPers;
         $this->numTelefono = $phonoPers;
+        $this->neto = $sueldoNeto;
         
     }
 
@@ -149,13 +151,37 @@ class Persona{
         return $this;
     }
 
+     /**
+     * Get the value of neto
+     */ 
+    public function getNeto()
+    {
+        return $this->neto;
+    }
+
+    /**
+     * Set the value of neto
+     *
+     * @return  self
+     */ 
+    public function setNeto($neto)
+    {
+        $this->neto = $neto;
+
+        return $this;
+    }
+
     /**
      * Implementamos el metodo para poder mostar los datos de la clase
      */
 
     public function __toString()
     {
-        return "\nApellido y Nombre: ".$this->getApellidoPers().", ". $this->getNombrePers()."\nNumero de DNI: ". $this->getNumeroDNI()."\nNumero de telefono: ". $this->getNumTelefono()."Domicilio: ".$this->getDireccionPers()."\nCorreo electronico: ". $this->getPersEmail();
+        return "\nApellido y Nombre: ".$this->getApellidoPers().", ". $this->getNombrePers().
+               "\nNumero de DNI: ". $this->getNumeroDNI().
+               "\nNumero de telefono: ". $this->getNumTelefono().
+               "\nDomicilio: ".$this->getDireccionPers().
+               "\nCorreo electronico: ". $this->getPersEmail();
     }
 
     /**
@@ -166,5 +192,7 @@ class Persona{
     {
         echo "\nLa persona no esta registrada\n";
     }
+
+   
 }
 ?>

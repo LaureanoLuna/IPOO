@@ -273,14 +273,14 @@ que debe ser abonada de un préstamo, si el préstamo tiene todas sus cuotas can
      {
         $arregloCuota = $this->getColeccionCuotas();
         $i = 0;
-        $x = true;
+        $bool = true;
         /* $cuotaPagar = ""; */
-       while ($x) {
+       while ($bool) {
             $a = $arregloCuota[$i];           
             if (!$a->getEstado()){
 
                $cuotaPagar = $a;
-                $x = false;
+                $bool = false;
             }else{
                 $cuotaPagar = null;
             }
@@ -293,7 +293,8 @@ que debe ser abonada de un préstamo, si el préstamo tiene todas sus cuotas can
 
      private function Cuotas()
      {
-        foreach ($this->getColeccionCuotas() as $key => $value) {
+         $arrayCuotas = $this->getColeccionCuotas();
+        foreach ($arrayCuotas as $key => $value) {
             
             return "\n▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ \n".$value."\n▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ \n";
         }

@@ -88,6 +88,7 @@ En la clase Financiera:
 7. Implementar el método informarCuotaPagar(idPrestamo) que recibe por parámetro la identificación del
     préstamo, se busca el préstamo en la colección de prestamos y si es encontrado se obtiene la siguiente
     cuota a pagar. El método debe retornar la referencia a la cuota. Utilizar para su implementación el método darSiguienteCuotaPagar
+    
     Implementar un script TestFinanciera en la cual:
 
 1. Se crea un objeto Financiera con la siguiente información: denominación= Money, dirección = “Av. Arg
