@@ -5,12 +5,14 @@ class Financiera{
     private $denominacion;
     private $direccion;
     private $coleccionPrestamos;
+    
 
     public function __construct($denominacionFinanciera, $direFinanciera)
     {
         $this->denominacion = $denominacionFinanciera;
         $this->direccion = $direFinanciera;
         $this->coleccionPrestamos;
+    
     }
 
     //iMPLEMENTAMOS LOS METODOS DE ACCESO
@@ -81,8 +83,9 @@ class Financiera{
     {
         $arrayPrestamos = $this->getColeccionPrestamos();
         foreach ($arrayPrestamos as $key => $value) {
-            $prestamos = "\n".$value."\n";
+            $prestamos = "\n".$value->__toString()."\n";
         }
+       
         return $prestamos;
     }
 
@@ -93,43 +96,63 @@ class Financiera{
         $this->setColeccionPrestamos($arrayPrestamos);
     }
 
-   
-
-    private function estaPrestamoRealizado($newPrestamo)
+    public function validacionPrestamosOtorgar()
     {
-        $validacion = true;
         $arrayPrestamos = $this->getColeccionPrestamos();
+        
         foreach ($arrayPrestamos as $key => $value) {
-            if ($value->getIdentificacion() == $newPrestamo->getIdentificacion()) {
-                $validacion = false;
+            
+            $cuotasOtorgadas = $value->getColeccionCuotas();
+            
+            if(empty($cuotasOtorgadas)){
+
+                $arregloCalificado[] = $value;
             }
         }
-        return $validacion;
+        return $arregloCalificado;
     }
+
+   
+
+   
 
     private function MontoNetoPersona($newPrestamo)
     {
+        $validacion = false;         
         $cantCuotas = $newPrestamo->getCantCuotas();
         $montoPrestamo = $newPrestamo->getMontoPrestamo();
-        $montoNetoPers = $newPrestamo->getObjPersona()->getNeto();
-        $validacion = false;
+                      
+        $montoNetoPers =$newPrestamo->getObjPersona()->getNeto();
+                echo $montoNetoPers."***\n";
+                
 
-        if (($montoPrestamo / $cantCuotas) < ($montoNetoPers * 0.4)){
+                if (($montoPrestamo / $cantCuotas) < (($montoNetoPers * 40)/100)){
 
-            $validacion = true;
-        }
+                    $validacion = true;
+                }
+        
+        
        
         return $validacion;
     }
 
-    public function otorgarPrestamoSiCalifica($newPrestamo)
+    public function otorgarPrestamoSiCalifica()
     {
-        if ($this->estaPrestamoRealizado($newPrestamo) && $this->MontoNetoPersona($newPrestamo)){
+        $prestamosClalificados = $this->validacionPrestamosOtorgar();
+      
+       foreach ($prestamosClalificados as $key => $value) {
+           
+           if ($this->MontoNetoPersona($value)){
 
-           $nuevoPrestamos = $newPrestamo->OtorgarPrestamo($newPrestamo);
-           $this->incorporarPrestamo($nuevoPrestamos);
+            $x = $value;
+           $value->OtorgarPrestamo($x);
 
-        }
+            //$this->getColeccionPrestamos()->OtorgarPrestamo($value);
+              
+         }
+       }
+
+        
     }
 
     public function informarCuotaPagar($idPrestamo)
@@ -147,9 +170,9 @@ class Financiera{
 
     public function __toString()
     {
-        return ( "Denominacion: ". $this->getDenominacion().
-                "Direccion: ". $this->getDireccion().
-                "Prestamos Otorgados: ". $this->Prestamos());
+        return ( "\nDenominacion: ". $this->getDenominacion().
+                "\nDireccion: ". $this->getDireccion());
+               // "\nPrestamos Otorgados: ". $this->Prestamos());
     }
 
 

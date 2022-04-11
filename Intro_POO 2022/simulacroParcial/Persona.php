@@ -7,7 +7,7 @@
             4. Redefinir el método _toString para que retorne la información de los atributos de la clase.
     */
 
-class Persona{
+class PersonaPrestamo{
 
     private $nombrePers;
     private $apellidoPers;

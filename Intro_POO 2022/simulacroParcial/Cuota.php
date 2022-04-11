@@ -119,7 +119,9 @@ que deben ser aplicados.
 
     public function darMontoFinalCuota()
     {
-        return (($this->getMonto_cuota() * $this->getMonto_interes()) / 100) + $this->getMonto_cuota();
+        $montoCuota = $this->getMonto_cuota();
+        $montoInteres = $this->getMonto_interes();
+        return ($montoCuota * ($montoInteres * 0.01)) + $montoCuota;
     }
 
     /**
@@ -128,7 +130,7 @@ que deben ser aplicados.
      * @param int $pago
      */
 
-    public function PagarCuota($pago)
+   /*  public function PagarCuota($pago)
     {
         if ($pago == $this->getMonto_cuota()){
             $this->setEstado(true);
@@ -137,7 +139,7 @@ que deben ser aplicados.
             $this->setMonto_cuota($x);
         }
     }
-
+ */
     public function EstadoCuota()
     {
         if ($this->getEstado()){

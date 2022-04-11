@@ -228,39 +228,41 @@ que debe ser abonada de un préstamo, si el préstamo tiene todas sus cuotas can
         $cuota = $this->getCantCuotas();
         $inters = $this->getTazaInteres();
         
-        $intersCuota = ($monto - (($monto / $cuota) * $numCuota -1)) * $inters / 0.01;
+        $intersCuota =($monto/$cuota) * ($inters * 0.01);
 
         return $intersCuota;
         
     }
 
     /**
-     * Setea la variable instancia fecha otorgamiento, con la fecha actual ( por la función de PHP getdate()) 
+     * Setea la variable instancia fecha otorgamiento, con la fecha actual ( por la función de PHP date()) 
      * y genera cada una de objetos cuotas dependiendo el valor de cantidad de cuotas, junto con el importe todal de la cuota
      *
      */
 
-     public function OtorgarPrestamo()
+     public function OtorgarPrestamo($prestamo)
      {
-        $fecha = getdate();
-        $this->setFechaOtorgamiento($fecha);
-
-        $cuotas = $this->getCantCuotas();
-        $monto = $this->getMontoPrestamo();
-        $arregloCuotas = $this->getColeccionCuotas();
+        $fecha = date("d-m-Y");
+        $prestamo->setFechaOtorgamiento($fecha);
+        
+        
+        $cuotas = $prestamo->getCantCuotas();
+        $monto = $prestamo->getMontoPrestamo();
+        
 
         $montoCuota = $monto / $cuotas;
         $numeroCuota = 1;
         
-        for ($i=0; $i <= $cuotas; $i++) { 
-           $interesCuota = $this->calcularInteresPrestamo($numeroCuota);
+        for ($i=0; $i < $cuotas; $i++) { 
+           $interesCuota = $prestamo->calcularInteresPrestamo($numeroCuota);
 
-           $arregloCuotas[$i] = new Cuota($numeroCuota,$montoCuota,$interesCuota);
+           $arregloCuotas[] = new Cuota($numeroCuota,$montoCuota,$interesCuota);
            $numeroCuota++;
 
         }
 
-        $this->setColeccionCuotas($arregloCuotas);  
+        $prestamo->setColeccionCuotas($arregloCuotas); 
+         
      }
 
      /**
@@ -272,17 +274,20 @@ que debe ser abonada de un préstamo, si el préstamo tiene todas sus cuotas can
      public function darSiguienteCuotaPagar()
      {
         $arregloCuota = $this->getColeccionCuotas();
+        print_r($arregloCuota);
         $i = 0;
         $bool = true;
         /* $cuotaPagar = ""; */
        while ($bool) {
-            $a = $arregloCuota[$i];           
-            if (!$a->getEstado()){
+            $a = $arregloCuota[$i]; 
+            echo ($arregloCuota);          
+            if ($a->getEstado()){
 
-               $cuotaPagar = $a;
-                $bool = false;
-            }else{
                 $cuotaPagar = null;
+            }else{
+               
+                $cuotaPagar = $a;
+                $bool = false;
             }
 
             $i++;
@@ -294,9 +299,10 @@ que debe ser abonada de un préstamo, si el préstamo tiene todas sus cuotas can
      private function Cuotas()
      {
          $arrayCuotas = $this->getColeccionCuotas();
+         
         foreach ($arrayCuotas as $key => $value) {
             
-            return "\n▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ \n".$value."\n▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ \n";
+            return "\n▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ \n".print_r($value)."\n▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ \n";
         }
      }
 
