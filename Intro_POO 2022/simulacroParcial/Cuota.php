@@ -111,18 +111,7 @@ que deben ser aplicados.
         return $this;
     }
 
-    /**
-     * Metodo que retorna el monto de la cuota mas el interes impuesto por la financiera
-     * 
-     * @return voil
-     */
-
-    public function darMontoFinalCuota()
-    {
-        $montoCuota = $this->getMonto_cuota();
-        $montoInteres = $this->getMonto_interes();
-        return ($montoCuota * ($montoInteres * 0.01)) + $montoCuota;
-    }
+   
 
     /**
      * Metodo que settea el estado de la cuota se esta es pagada en su totalidad, sino resta el monto pagado setteando el monto de la cuota.
@@ -149,6 +138,18 @@ que deben ser aplicados.
         }
         return $estadoCuota;
     }
+     /**
+     * Metodo que retorna el monto de la cuota mas el interes impuesto por la financiera
+     * 
+     * @return voil
+     */
+
+    public function darMontoFinalCuota()
+    {
+        $montoCuota = $this->getMonto_cuota();
+        $montoInteres = $this->getMonto_interes();
+        return ($montoCuota + $montoInteres);
+    }
 
     /**Metodo para la visualizacion de los datos de la clase */
 
@@ -158,14 +159,16 @@ que deben ser aplicados.
                "\nEs de $". $this->getMonto_cuota(). 
                "\nEl interes es de $". $this->getMonto_interes(). 
                "\nEl total de la cuota a abonar es de $".$this->darMontoFinalCuota().
-               "\nEstado: ". $this->EstadoCuota();
+               "\nEstado: ". $this->EstadoCuota()."\n";
     }
 
-    /**metodo por si la cuota no existe */
+    /*  metodo por si la cuota no existe 
 
     public function __destruct()
     {
         echo "\nLa cuota no existe \n";
-    }
+    } */ 
+
+    
  }
 ?>

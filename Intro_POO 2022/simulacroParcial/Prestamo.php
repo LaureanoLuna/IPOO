@@ -225,13 +225,32 @@ que debe ser abonada de un préstamo, si el préstamo tiene todas sus cuotas can
     private function calcularInteresPrestamo($numCuota)
     {
         $monto = $this->getMontoPrestamo();
-        $cuota = $this->getCantCuotas();
+        $cantCuota = $this->getCantCuotas();
         $inters = $this->getTazaInteres();
         
-        $intersCuota =($monto/$cuota) * ($inters * 0.01);
+        $intersCuota = ($monto - (($monto / $cantCuota) * ($numCuota - 1))) * $inters / 10;
 
         return $intersCuota;
         
+    }
+
+    public function generarCuotas()
+    {
+        $cuotas = $this->getCantCuotas();
+        $monto = $this->getMontoPrestamo();
+        
+
+        $montoCuota = $monto / $cuotas;
+        //$numeroCuota = 1;
+        
+        for ($i=1; $i < $cuotas; $i++) { 
+           $interesCuota = $this->calcularInteresPrestamo($i);
+
+           $objCuota = new Cuota($i,$montoCuota,$interesCuota);
+           $arregloCuotas[$i] = $objCuota ;
+        }
+          
+        $this->setColeccionCuotas($arregloCuotas);
     }
 
     /**
@@ -245,66 +264,52 @@ que debe ser abonada de un préstamo, si el préstamo tiene todas sus cuotas can
         $fecha = date("d-m-Y");
         $prestamo->setFechaOtorgamiento($fecha);
         
-        
-        $cuotas = $prestamo->getCantCuotas();
-        $monto = $prestamo->getMontoPrestamo();
-        
-
-        $montoCuota = $monto / $cuotas;
-        $numeroCuota = 1;
-        
-        for ($i=0; $i < $cuotas; $i++) { 
-           $interesCuota = $prestamo->calcularInteresPrestamo($numeroCuota);
-
-           $arregloCuotas[] = new Cuota($numeroCuota,$montoCuota,$interesCuota);
-           $numeroCuota++;
-
-        }
-
-        $prestamo->setColeccionCuotas($arregloCuotas); 
+        $this->generarCuotas();        
          
      }
 
      /**
       * Método que retorna la referencia a la siguiente cuota que debe ser abonada de un préstamo,
       * si el préstamo tiene todas sus cuotas canceladas retorna null.
-      * @return voil
+      * @return 
       */
 
      public function darSiguienteCuotaPagar()
      {
         $arregloCuota = $this->getColeccionCuotas();
-        print_r($arregloCuota);
-        $i = 0;
+        $cuotaPagar = null;
         $bool = true;
-        /* $cuotaPagar = ""; */
-       while ($bool) {
-            $a = $arregloCuota[$i]; 
-            echo ($arregloCuota);          
-            if ($a->getEstado()){
+        foreach ($arregloCuota as $key => $value) {
+            if($bool){
+                $cuota = $value;
+                $estado = $cuota->getEstado();
 
-                $cuotaPagar = null;
-            }else{
-               
-                $cuotaPagar = $a;
-                $bool = false;
+                if ($estado === false){
+
+                    $bool = false;
+                    $cuotaPagar = $value;
+                }
             }
-
-            $i++;
+        }
+        return $cuotaPagar;
+    
        }
+       
+     
 
-       return $cuotaPagar;
-     }
-
-     private function Cuotas()
+    /*  private function Cuotas()
      {
          $arrayCuotas = $this->getColeccionCuotas();
          
-        foreach ($arrayCuotas as $key => $value) {
+        for ($i=0; $i<count($arrayCuotas); $i++) {
             
-            return "\n▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ \n".print_r($value)."\n▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ \n";
+           $x ="\n▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ \n".$arrayCuotas[$i]."\n▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ \n";
+
+           return $x;
         }
-     }
+     } */
+
+     
 
      public function __toString()
      {
@@ -314,14 +319,16 @@ que debe ser abonada de un préstamo, si el préstamo tiene todas sus cuotas can
                  "Monto: ". $this->getMontoPrestamo()."\n".
                  "Cantidad de Cuotas: ". $this->getCantCuotas(). "\n". 
                  "Taza de Interes: ". $this->getTazaInteres(). "\n". 
-                 "Cuotas: ". $this->Cuotas(). "\n".
+                 //"Cuotas: ". $this->Cuotas(). "\n".
                  "Titular: ". $this->getObjPersona(). "\n");
+                 
      }
+     
 
 
 
 
 
-
- }
+}
+ 
 ?>

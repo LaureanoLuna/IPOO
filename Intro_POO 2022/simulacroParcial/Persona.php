@@ -187,11 +187,11 @@ class PersonaPrestamo{
     /**
      * Implemtentamos el metodo para casos de no funcionar la clase
      */
-
+/* 
     public function __destruct()
     {
         echo "\nLa persona no esta registrada\n";
-    }
+    } */
 
    
 }

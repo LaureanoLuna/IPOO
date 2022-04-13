@@ -79,15 +79,16 @@ class Financiera{
         return $this;
     }
 
-    private function Prestamos ()
+   /*  private function Prestamos ()
     {
         $arrayPrestamos = $this->getColeccionPrestamos();
         foreach ($arrayPrestamos as $key => $value) {
-            $prestamos = "\n".$value->__toString()."\n";
+            $prestamos = "\n".$value."\n";
+            return $prestamos;
         }
        
-        return $prestamos;
-    }
+       
+    } */
 
     public function incorporarPrestamo($newPrestamo)
     {
@@ -123,7 +124,7 @@ class Financiera{
         $montoPrestamo = $newPrestamo->getMontoPrestamo();
                       
         $montoNetoPers =$newPrestamo->getObjPersona()->getNeto();
-                echo $montoNetoPers."***\n";
+               
                 
 
                 if (($montoPrestamo / $cantCuotas) < (($montoNetoPers * 40)/100)){
@@ -162,17 +163,18 @@ class Financiera{
 
         if ($value->getIdentificacion() == $idPrestamo){
 
-            $value->darSiguienteCuotaPagar();
+            $cuotaPagar = $value->darSiguienteCuotaPagar();
         }          
 
        }
+       return $cuotaPagar;
     }
 
     public function __toString()
     {
         return ( "\nDenominacion: ". $this->getDenominacion().
                 "\nDireccion: ". $this->getDireccion());
-               // "\nPrestamos Otorgados: ". $this->Prestamos());
+              //"\nPrestamos Otorgados: ". $this->Prestamos());
     }
 
 
