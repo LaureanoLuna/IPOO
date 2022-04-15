@@ -243,11 +243,11 @@ que debe ser abonada de un préstamo, si el préstamo tiene todas sus cuotas can
         $montoCuota = $monto / $cuotas;
         //$numeroCuota = 1;
         
-        for ($i=1; $i < $cuotas; $i++) { 
+        for ($i=1; $i <= $cuotas; $i++) { 
            $interesCuota = $this->calcularInteresPrestamo($i);
 
            $objCuota = new Cuota($i,$montoCuota,$interesCuota);
-           $arregloCuotas[$i] = $objCuota ;
+           $arregloCuotas[$i-1] = $objCuota ;
         }
           
         $this->setColeccionCuotas($arregloCuotas);
@@ -297,31 +297,31 @@ que debe ser abonada de un préstamo, si el préstamo tiene todas sus cuotas can
        
      
 
-    /*  private function Cuotas()
-     {
-         $arrayCuotas = $this->getColeccionCuotas();
-         
-        for ($i=0; $i<count($arrayCuotas); $i++) {
-            
-           $x ="\n▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ \n".$arrayCuotas[$i]."\n▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ ▬ \n";
+    private function stringCuotas(){
 
-           return $x;
+        $cuotas = "";
+        foreach ($this->getColeccionCuotas() as $key ) {
+            
+            $cuotas .= "\n".$key;
+            
         }
-     } */
+        return $cuotas;
+    }
 
      
 
      public function __toString()
      {
-         return ("Identificacion: ". $this->getIdentificacion()."\n".
+         $str = ("Identificacion: ". $this->getIdentificacion()."\n".
                  "Codigo del electrodomestico: ". $this->getCodElectrodomestico()."\n".
                  "Fecha de Otorgamiento: ". $this->getFechaOtorgamiento()."\n". 
                  "Monto: ". $this->getMontoPrestamo()."\n".
                  "Cantidad de Cuotas: ". $this->getCantCuotas(). "\n". 
                  "Taza de Interes: ". $this->getTazaInteres(). "\n". 
-                 //"Cuotas: ". $this->Cuotas(). "\n".
+                 "Cuotas: ". $this->stringCuotas(). "\n".
                  "Titular: ". $this->getObjPersona(). "\n");
                  
+        return $str;
      }
      
 

@@ -170,11 +170,23 @@ class Financiera{
        return $cuotaPagar;
     }
 
+    private function stringPrestamos(){
+
+        $prestamos = "";
+        foreach ($this->getcoleccionPrestamos() as $key => $value ) {
+            
+            $prestamos .= $value;
+
+            
+        }
+        return $prestamos;
+    }
+
     public function __toString()
     {
         return ( "\nDenominacion: ". $this->getDenominacion().
-                "\nDireccion: ". $this->getDireccion());
-              //"\nPrestamos Otorgados: ". $this->Prestamos());
+                "\nDireccion: ". $this->getDireccion().
+              "\nPrestamos Otorgados: ". $this->stringPrestamos());
     }
 
 

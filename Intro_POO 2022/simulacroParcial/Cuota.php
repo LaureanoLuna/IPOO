@@ -155,11 +155,12 @@ que deben ser aplicados.
 
     public function __toString()
     {
-        return "\nLa cuota N° ". $this->getNumCuota(). 
+        $str = "\nLa cuota N° ". $this->getNumCuota(). 
                "\nEs de $". $this->getMonto_cuota(). 
                "\nEl interes es de $". $this->getMonto_interes(). 
                "\nEl total de la cuota a abonar es de $".$this->darMontoFinalCuota().
                "\nEstado: ". $this->EstadoCuota()."\n";
+        return $str;
     }
 
     /*  metodo por si la cuota no existe 

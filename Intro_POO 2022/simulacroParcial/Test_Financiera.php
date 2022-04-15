@@ -22,21 +22,22 @@ $objFinanciera->incorporarPrestamo($objPrestamo3);
 
 //echo $objFinanciera."\n";
 
-$objFinanciera->otorgarPrestamoSiCalifica();
+ $objFinanciera->otorgarPrestamoSiCalifica();
 //echo $objFinanciera;
 
-$objCuota = $objFinanciera->informarCuotaPagar(1);
 
-//echo $objCuota;
+$objCuota = $objFinanciera->informarCuotaPagar(2);
 
-$x =  $objCuota->darMontoFinalCuota();
-echo $x;
+echo $objCuota;
+/*
+$objCuota->darMontoFinalCuota(); */
+//echo $x;
 
-$y = true;
+/* $y = true;
 $objCuota->setEstado($y);
 echo $objCuota;
 $objCuota = $objFinanciera->informarCuotaPagar(1);
-echo $objCuota;
+echo $objCuota; */
 
 //$objFinanciera->informarCuotaPagar(3);
 //echo $objFinanciera;
