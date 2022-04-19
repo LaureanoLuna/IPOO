@@ -13,15 +13,15 @@ class ViajeFeliz{
     private $codigo;
     private $destino;
     private $cantMaxPers;
-    private $objPersona;
+    private $ObjPasajero;
 
     // Metodo contructor del objeto ViajeFelis
-    public function __construct($codViaje, $lugarDestino, $limitPers, $dataobjPersona)
+    public function __construct($codViaje, $lugarDestino, $limitPers)
     {
         $this->codigo = $codViaje;
         $this->destino = $lugarDestino;
         $this->cantMaxPers = $limitPers;
-        $this->objPersona = $dataobjPersona;
+        $this->ObjPasajero = [];
         
     }
     
@@ -89,19 +89,19 @@ class ViajeFeliz{
     /**
      * Get the value of pasajeros
      */ 
-    public function getObjPersona()
+    public function getObjPasajero()
     {
-        return $this->objPersona;
+        return $this->ObjPasajero;
     }
 
     /**
-     * Set the value of objPersona
+     * Set the value of ObjPasajero
      *
      * @return  self
      */ 
-    public function setObjPersona($objPersona)
+    public function setObjPasajero($ObjPasajero)
     {
-        $this->objPersona = $objPersona;
+        $this->ObjPasajero = $ObjPasajero;
 
         return $this;
     }
@@ -114,27 +114,27 @@ class ViajeFeliz{
     public function estaLLeno()
     {
         $capacidadMax = $this->getCantMaxPers();
-        $cantidadActualObjPersona = count($this->getObjPersona());
+        $cantidadActualObjPasajero = count($this->getObjPasajero());
         $bool = false;
-        if ($cantidadActualObjPersona == $capacidadMax){
+        if ($cantidadActualObjPasajero == $capacidadMax){
             $bool = true;
         }
         return $bool;
     }
 
    /**Metodo que nos permite crear un nuevo objeto Persona,
-    *  ingresarlo en el arreglo del atributo ObjPersona y setterar dicho atributo 
+    *  ingresarlo en el arreglo del atributo ObjPasajero y setterar dicho atributo 
     *@param string $nom
     *@param string $apell
     *@param int $numDNI
     */
     
-    public function AgregrarObjPersona ($nomb,$apell,$numDni)
+    public function AgregrarObjPasajero ($nomb, $apell, $numDni, $numTelefono)
     {
-        // array $objPersona
-        $objPersona = $this->getObjPersona();// Recuperamos los datos del atributo
-        $objPersona[] = new Persona($nomb,$apell,$numDni); //Agregamos el nuevo objeto Persona al arreglo 
-        $this->setObjPersona($objPersona); // Setteamos el atributo con los nuevos cambios
+        // array $ObjPasajero
+        $ObjPasajero = $this->getObjPasajero();// Recuperamos los datos del atributo
+        $ObjPasajero[] = new Persona($nomb,$apell,$numDni,$numTelefono); //Agregamos el nuevo objeto Persona al arreglo 
+        $this->setObjPasajero($ObjPasajero); // Setteamos el atributo con los nuevos cambios
     }
     
     /** Metodo que toma por parametro el indice del arreglo que se desea modifica y el nuevo valor a modificar.
@@ -147,7 +147,7 @@ class ViajeFeliz{
     public function ModificarNombre($newNom, $clavePasajero)
     {
         $bool=false; // Inicializamos la variable 
-        $obj = $this->getObjPersona(); //recuperamos los datos del atributo
+        $obj = $this->getObjPasajero(); //recuperamos los datos del atributo
         foreach ($obj as $key => $value) { // recorremos el arreglo
             if ($clavePasajero == $key){ // comparamos si el indice coincide con la clave ingresada por paramentro.
 
@@ -171,7 +171,7 @@ class ViajeFeliz{
     public function ModificarApellido($newApellido, $clavePasajero)
     {
         $bool=false; // Inicializamos la variable
-        $obj = $this->getObjPersona(); //recuperamos los datos del atributo
+        $obj = $this->getObjPasajero(); //recuperamos los datos del atributo
         foreach ($obj as $key => $value) { // recorremos el arreglo
             if ($clavePasajero == $key){ // comparamos si el indice coincide con la clave ingresada por paramentro.
 
@@ -196,7 +196,7 @@ class ViajeFeliz{
     public function ModificarDNI($newDNI, $clavePasajero)
     {
         $bool=false;// Inicializamos la variable
-        $obj = $this->getObjPersona();//recuperamos los datos del atributo
+        $obj = $this->getObjPasajero();//recuperamos los datos del atributo
         foreach ($obj as $key => $value) { // recorremos el arreglo
             if ($clavePasajero == $key){// comparamos si el indice coincide con la clave ingresada por paramentro.
 
@@ -210,18 +210,41 @@ class ViajeFeliz{
         return $bool;
     }
 
-    /**Metodo para borrar un elemento del atributo objPersona, toma por parametro el indice que se desea eliminar
+    public function ModificarNumTelefono($newPhone, $clavePasajero)
+    {
+        $bool=false;// Inicializamos la variable
+        $obj = $this->getObjPasajero();//recuperamos los datos del atributo
+        foreach ($obj as $key => $value) { // recorremos el arreglo
+            if ($clavePasajero == $key){// comparamos si el indice coincide con la clave ingresada por paramentro.
+
+                $value->CambiarDNI($newPhone);// llamamos al metodo del objeto Persona con el nuevo dato ingresado por parametro.
+                $bool = true;// Cambiamos el valor de la variable para generar una confirmacion de que se implemento correctamente el metodo.
+
+            }
+       
+        
+        }
+        return $bool;
+        
+    }
+    //Metodo que settea el atributo contenedor del arreglo de los datos de pasajeros
+    public function AgregarPasajeros($ObjPasajero)
+    {
+        $this->setObjPasajero($ObjPasajero);
+    }
+
+    /**Metodo para borrar un elemento del atributo ObjPasajero, toma por parametro el indice que se desea eliminar
      * 
      * @param int $clavePasajero
      *  
       */
     public function BorrarPasajero($clavePasajero)
     {
-       $x = $this->getObjPersona(); // recuperamos los datos del atributo
+       $x = $this->getObjPasajero(); // recuperamos los datos del atributo
        unset($x[$clavePasajero]); //con la funcion unset() eliminamos del arreglo el indice ingresado
        
        $x = $this->Reordenar($x); // invocamos al metodo Reordenar
-       $this->setObjPersona($x); // setteamos al atributo ObjPersona con los valores reacomodados
+       $this->setObjPasajero($x); // setteamos al atributo ObjPasajero con los valores reacomodados
        
        
 
@@ -246,6 +269,12 @@ class ViajeFeliz{
            }
        }
         return $arrayReordenado; // retornamos el arreglo ordenado
+    }
+
+    public function VerificacionPasajeros($datoPasajero)
+    {
+
+        
     }
 
       public function __toString()

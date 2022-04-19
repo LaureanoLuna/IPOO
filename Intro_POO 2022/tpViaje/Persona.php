@@ -51,7 +51,7 @@ class Persona{
     public function CambiarDatos($clave,$nuevoDato)
     {
         $arrayPersona = $this->getPersona();
-        foreach ($arrayPersona as $key => $value) {
+        foreach ($arrayPersona as $key) {
             if ( $clave == $key){
                 $arrayPersona[$key] = $nuevoDato;
             }

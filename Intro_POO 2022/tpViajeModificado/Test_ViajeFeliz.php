@@ -1,9 +1,12 @@
  <?php
 
 include('ViajeFeliz.php');
-include('Persona.php');
+include('Pasajero.php');
+include('ResponsableV.php');
 
-$per = [new Persona("Laureano","Luna",38232325),new Persona("Josefo","Giacone",26841599),new Persona("Margarita","Muñoz",16589633)];//objeto Persona ya creado
+$per = [new Pasajero("Laureano","Luna",38232325, 1126478811),
+        new Pasajero("Josefo","Giacone",26841599, 2994190157),
+        new Pasajero("Margarita","Muñoz",16589633, 35698541)];//objeto Persona ya creado
 
 $objViaje = new ViajeFeliz(3543,"Neuquen",3,$per); //Objeto viaje ya creado
 $i = 0;
@@ -39,6 +42,8 @@ switch ($opciones) {
     echo "\nCapacidad de pasajeros: ";
     $capacidadViaje = trim(fgets(STDIN));
     echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+
+    $objViaje = new ViajeFeliz($codViaje,$destino,$capacidadViaje);
     $p = 0;
 
     do {
@@ -59,7 +64,12 @@ switch ($opciones) {
 
         echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
 
-        $objPersona[$p]=new Persona($nomPasajero, $apellidoPasajero, $dniPasajero);
+        echo "\nNumero de DNI: ";        
+        $telPasajero = trim(fgets(STDIN));
+
+        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+
+        $objPersona[$p]=new Pasajero($nomPasajero, $apellidoPasajero, $dniPasajero, $telPasajero);
 
         echo "\n¿ Desea Ingresar otro pasajero ?\n";
         $peppol = trim(fgets(STDIN));
@@ -75,7 +85,7 @@ switch ($opciones) {
         
     } while ($peppol == "si");
 
-    $objViaje = new ViajeFeliz($codViaje,$destino,$capacidadViaje,$objPersona);
+    $objViaje->AgregarPasajeros($objPasajero);
        
        break;
     case '2':
