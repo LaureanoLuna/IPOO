@@ -7,13 +7,13 @@ Realice la implementación de la clase Viaje e implemente los métodos necesario
 
 Implementar un script testViaje.php que cree una instancia de la clase Viaje y presente un menú que permita cargar la información del viaje, modificar y ver sus datos. */
 
-class ViajeFeliz{
+class ViajeFelizModificado{
 
     /**Atributos de la clase viaje */
     private $codigo;
     private $destino;
     private $cantMaxPers;
-    private $ObjPasajero;
+    private $objPasajero = [];
 
     // Metodo contructor del objeto ViajeFelis
     public function __construct($codViaje, $lugarDestino, $limitPers)
@@ -21,7 +21,7 @@ class ViajeFeliz{
         $this->codigo = $codViaje;
         $this->destino = $lugarDestino;
         $this->cantMaxPers = $limitPers;
-        $this->ObjPasajero = [];
+        $this->ObjPasajero;
         
     }
     
@@ -99,14 +99,15 @@ class ViajeFeliz{
      *
      * @return  self
      */ 
-    public function setObjPasajero($ObjPasajero)
+    public function setObjPasajero($objPasajero)
     {
-        $this->ObjPasajero = $ObjPasajero;
+        $this->ObjPasajero = $objPasajero;
 
         return $this;
     }
 
-    /**Metodo que nos retorna si la capacidad maxima de pasajeros ya llego a su limite
+    /**
+     * Metodo que nos retorna si la capacidad maxima de pasajeros ya llego a su limite
      * 
      * @return booleano $bool.
      */
@@ -122,22 +123,26 @@ class ViajeFeliz{
         return $bool;
     }
 
-   /**Metodo que nos permite crear un nuevo objeto Persona,
+   /**
+    * Metodo que nos permite crear un nuevo objeto Persona,
     *  ingresarlo en el arreglo del atributo ObjPasajero y setterar dicho atributo 
-    *@param string $nom
-    *@param string $apell
-    *@param int $numDNI
-    */
+    *   @param string $nom
+    *   @param string $apell
+    *   @param int $numDNI
+    *   @param int $numTelefono
+     */
     
     public function AgregrarObjPasajero ($nomb, $apell, $numDni, $numTelefono)
     {
-        // array $ObjPasajero
-        $ObjPasajero = $this->getObjPasajero();// Recuperamos los datos del atributo
-        $ObjPasajero[] = new Persona($nomb,$apell,$numDni,$numTelefono); //Agregamos el nuevo objeto Persona al arreglo 
-        $this->setObjPasajero($ObjPasajero); // Setteamos el atributo con los nuevos cambios
+        // array $objPasajero
+        $objPasajero = $this->getObjPasajero();// Recuperamos los datos del atributo
+        $cantObjPasajero = count($objPasajero);
+        $objPasajero[$cantObjPasajero] = new Pasajero($nomb,$apell,$numDni,$numTelefono); //Agregamos el nuevo objeto Persona al arreglo 
+        $this->setObjPasajero($objPasajero); // Setteamos el atributo con los nuevos cambios
     }
     
-    /** Metodo que toma por parametro el indice del arreglo que se desea modifica y el nuevo valor a modificar.
+    /** 
+     * Metodo que toma por parametro el indice del arreglo que se desea modifica y el nuevo valor a modificar.
      * retorna un valor booleano como confirmacion exitosa de la implementacion del metodo.
      * @param int $clavePasajero
      * @param string $newNom
@@ -161,7 +166,8 @@ class ViajeFeliz{
         return $bool;
     }
 
-     /** Metodo que toma por parametro el indice del arreglo que se desea modifica y el nuevo valor a modificar.
+     /**
+      *  Metodo que toma por parametro el indice del arreglo que se desea modifica y el nuevo valor a modificar.
      * retorna un valor booleano como confirmacion exitosa de la implementacion del metodo.
      * @param int $clavePasajero
      * @param string $newPellido
@@ -185,7 +191,8 @@ class ViajeFeliz{
         return $bool;
     }
 
-     /** Metodo que toma por parametro el indice del arreglo que se desea modifica y el nuevo valor a modificar.
+     /** 
+      * Metodo que toma por parametro el indice del arreglo que se desea modifica y el nuevo valor a modificar.
      * retorna un valor booleano como confirmacion exitosa de la implementacion del metodo.
      * @param int $clavePasajero
      * @param int $newDNI
@@ -227,13 +234,10 @@ class ViajeFeliz{
         return $bool;
         
     }
-    //Metodo que settea el atributo contenedor del arreglo de los datos de pasajeros
-    public function AgregarPasajeros($ObjPasajero)
-    {
-        $this->setObjPasajero($ObjPasajero);
-    }
 
-    /**Metodo para borrar un elemento del atributo ObjPasajero, toma por parametro el indice que se desea eliminar
+    
+    /**
+     * Metodo para borrar un elemento del atributo ObjPasajero, toma por parametro el indice que se desea eliminar
      * 
      * @param int $clavePasajero
      *  
@@ -258,12 +262,12 @@ class ViajeFeliz{
      */
     private function Reordenar($arregloDesordenado)
     {
-        $i = 0; //inicializamos esta variable hueca
+        $i = 0; //inicializamos esta variable pivote
         $arrayReordenado = [];//inicializamos la variable donde se guardarna los datos reordenados
         
        foreach ($arregloDesordenado as $key => $value) {//recorremos el arreglo con huegos/deserdenado
            if(empty($value)){//corroboramos si la funcion empty retorna verdadero, esta funcion resulta verdadero si el elemento del arreglo es null/vacio.
-               $i++; // se le suma 1 a la variable. 
+               $i++; // se le suma 1 a la variable pivote. 
            }else{
                $arrayReordenado[] = $value;// los elementos del arreglo que contienen datos se asignan a un nuevo arrelo con nuevo indices ordenados
            }
@@ -271,11 +275,32 @@ class ViajeFeliz{
         return $arrayReordenado; // retornamos el arreglo ordenado
     }
 
-    public function VerificacionPasajeros($datoPasajero)
-    {
+    /**
+     * Metodo que verifica que ningun dato por ser ingresado para un nuevo objeto pasajero se repita con otro ya ingresado
+     * 
+     * @param string $nomPasajero
+     * @param string $apellidoPasajero
+     * @param int $dniPasajero
+     * @param int $telPasajero
+     * @return bool
+     */
 
+    public function VerificacionPasajeros($nomPasajero, $apellidoPasajero, $dniPasajero, $telPasajero)
+    {
+        $objPasajero = $this->getObjPasajero();
+        $validacion = false;
+
+        if ( $objPasajero->getNombre() <> $nomPasajero && $objPasajero->getApellido() <> $apellidoPasajero && $objPasajero->getNumDni() <> $dniPasajero && $objPasajero->getNumTelefono() <> $telPasajero ){
+
+            $validacion = true;
+        }
+
+        return $validacion;
         
     }
+
+
+
 
       public function __toString()
     {

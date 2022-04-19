@@ -1,6 +1,6 @@
  <?php
 
-include('ViajeFeliz.php');
+include('ViajeFelizModificado.php');
 include('Pasajero.php');
 include('ResponsableV.php');
 
@@ -8,7 +8,7 @@ $per = [new Pasajero("Laureano","Luna",38232325, 1126478811),
         new Pasajero("Josefo","Giacone",26841599, 2994190157),
         new Pasajero("Margarita","Muñoz",16589633, 35698541)];//objeto Persona ya creado
 
-$objViaje = new ViajeFeliz(3543,"Neuquen",3,$per); //Objeto viaje ya creado
+$objViaje = new ViajeFelizModificado(3543,"Neuquen",3); //Objeto viaje ya creado
 $i = 0;
 //Programa principal
 
@@ -43,10 +43,14 @@ switch ($opciones) {
     $capacidadViaje = trim(fgets(STDIN));
     echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
 
-    $objViaje = new ViajeFeliz($codViaje,$destino,$capacidadViaje);
-    $p = 0;
+    $objViaje = new ViajeFelizModificado($codViaje,$destino,$capacidadViaje);
+    
 
     do {
+        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+        echo "\nDatos de Pasajeros\n";
+        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+
         echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
 
         echo "\nNombre: ";        
@@ -64,16 +68,33 @@ switch ($opciones) {
 
         echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
 
-        echo "\nNumero de DNI: ";        
+        echo "\nNumero de Telefono: ";        
         $telPasajero = trim(fgets(STDIN));
 
         echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
 
-        $objPersona[$p]=new Pasajero($nomPasajero, $apellidoPasajero, $dniPasajero, $telPasajero);
+       if (count($objViaje->getObjPasajero())> 0){
+        
+        
+        if ($objViaje->VerificacionPasajeros($nomPasajero, $apellidoPasajero, $dniPasajero, $telPasajero)){
+
+            $objViaje->AgregrarObjPasajero($nomPasajero, $apellidoPasajero, $dniPasajero, $telPasajero);
+
+        }else{
+            echo "\nEl pasajero ya fue ingresado al viaje \n";
+            
+        }
+
+       }else{
+
+            $objViaje->AgregrarObjPasajero($nomPasajero, $apellidoPasajero, $dniPasajero, $telPasajero);
+
+       }
+
 
         echo "\n¿ Desea Ingresar otro pasajero ?\n";
         $peppol = trim(fgets(STDIN));
-        $p++;
+        
 
         if (count($objPersona) == $capacidadViaje){
 
@@ -85,13 +106,13 @@ switch ($opciones) {
         
     } while ($peppol == "si");
 
-    $objViaje->AgregarPasajeros($objPasajero);
+   
        
        break;
     case '2':
         echo $objViaje;
         echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
-        $x = $objViaje->getObjPersona();
+        $x = $objViaje->getObjPasajero();
         $i = 1;
         foreach ($x as $key => $value) {
             echo $i.")".$value;
@@ -138,10 +159,20 @@ switch ($opciones) {
                     $dniPasajeroNuevo = trim(fgets(STDIN));
 
                     echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
-    
-                    $objViaje->AgregrarObjPersona($nomPasajeroNuevo,$apellidoPasajeroNuevo,$dniPasajeroNuevo);
 
-                    echo "\nEl pasajero fue agregado con exito\n";
+                    echo "\nNumero de Telefono: ";                   
+                    $telPasajeroNuevo = trim(fgets(STDIN));
+
+                    echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+
+                    if ($objViaje->VerificacionPasajeros($nomPasajeroNuevo,$apellidoPasajeroNuevo,$dniPasajeroNuevo, $telPasajeroNuevo)){
+
+                        $objViaje->AgregrarObjPasajero($nomPasajeroNuevo,$apellidoPasajeroNuevo,$dniPasajeroNuevo, $telPasajeroNuevo);
+
+                         echo "\nEl pasajero fue agregado con exito\n";
+                    }
+    
+                    
                    }
     
                    break;
@@ -231,7 +262,7 @@ switch ($opciones) {
                    
                    break;
                 case '3':
-                   if (count($objViaje->getObjPersona()) > 0){
+                   if (count($objViaje->getObjPasajero()) > 0){
                     
                     echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
                     
@@ -240,7 +271,7 @@ switch ($opciones) {
                     
                     echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
                     
-                    if ($ubicacionPasajero <= count($objViaje->getObjPersona())){
+                    if ($ubicacionPasajero <= count($objViaje->getObjPasajero())){
 
                         $objViaje->BorrarPasajero($ubicacionPasajero);
 
