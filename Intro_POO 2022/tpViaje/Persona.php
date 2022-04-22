@@ -14,14 +14,16 @@ class Persona{
          * 
          */
 
-    public function __construct($nomPers, $apellidoPers, $dniPersona)
+    public function __construct($nomPers, $apellidoPers, $dniPersona, $numTelefono)
     {
         $this->persona["nombre"] = $nomPers;
         $this->persona["apellido"] = $apellidoPers;
         $this->persona["DNI"] = $dniPersona;
+        $this->persona["Telefono"] = $numTelefono;
     }
 
         //Implementamos los metodos de acceso a los atributos
+       
         // Getters y Setters
     /**
      * Get the value of persona
@@ -53,6 +55,7 @@ class Persona{
         $arrayPersona = $this->getPersona();
         foreach ($arrayPersona as $key) {
             if ( $clave == $key){
+                echo "\n--------".$arrayPersona[$key]."--------\n";
                 $arrayPersona[$key] = $nuevoDato;
             }
         }
@@ -82,10 +85,19 @@ class Persona{
         $this->CambiarDatos("DNI", $nuevoDNI);
     }
 
+     /**Metodo que settea el dato del atributo en clave Telefono, invocando el metodo CambiarDato.
+     * @param int $nuevoDNI
+     */
+    public function CambiarNumTelefono($nuevoTelefono)
+    {
+        $this->CambiarDatos("Telefono", $nuevoTelefono);
+    }
+
+
     /**Metodo implemetado para poder mostrar los datos de dicho objeto */
     public function __toString()
     {
-        return " Nombre: ".($this->getPersona()["nombre"])."\n Apellido: ".($this->getPersona()["apellido"]."\n Numero de DNI: ".($this->getPersona()["DNI"]))."\n";
+        return " Nombre: ".($this->getPersona()["nombre"])."\n Apellido: ".($this->getPersona()["apellido"]."\n Numero de DNI: ".($this->getPersona()["DNI"])."\nNumero de Telefono: ".($this->getPersona()["Telefono"]))."\n";
     }
 
     /**Metodo implementado que retorna un mensaje en cuyo caso fallara la creacion del objeto */

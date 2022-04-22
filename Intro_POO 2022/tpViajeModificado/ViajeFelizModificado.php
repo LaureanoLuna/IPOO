@@ -13,7 +13,8 @@ class ViajeFelizModificado{
     private $codigo;
     private $destino;
     private $cantMaxPers;
-    private $objPasajero = [];
+    private $objPasajero;
+    private $responsableViaje;
 
     // Metodo contructor del objeto ViajeFelis
     public function __construct($codViaje, $lugarDestino, $limitPers)
@@ -21,7 +22,8 @@ class ViajeFelizModificado{
         $this->codigo = $codViaje;
         $this->destino = $lugarDestino;
         $this->cantMaxPers = $limitPers;
-        $this->ObjPasajero;
+        $this->ObjPasajero = [];
+        $this->responsableViaje = [];
         
     }
     
@@ -105,6 +107,27 @@ class ViajeFelizModificado{
 
         return $this;
     }
+
+    /**
+     * Get the value of responsableViaje
+     */ 
+    public function getResponsableViaje()
+    {
+        return $this->responsableViaje;
+    }
+
+    /**
+     * Set the value of responsableViaje
+     *
+     * @return  self
+     */ 
+    public function setResponsableViaje($responsableViaje)
+    {
+        $this->responsableViaje = $responsableViaje;
+
+        return $this;
+    }
+
 
     /**
      * Metodo que nos retorna si la capacidad maxima de pasajeros ya llego a su limite
@@ -276,27 +299,41 @@ class ViajeFelizModificado{
     }
 
     /**
-     * Metodo que verifica que ningun dato por ser ingresado para un nuevo objeto pasajero se repita con otro ya ingresado
-     * 
-     * @param string $nomPasajero
-     * @param string $apellidoPasajero
-     * @param int $dniPasajero
-     * @param int $telPasajero
+     * Metodo que verifica que dato identificador de cada pasajero no se repita (DNI) ante el ingreso de un nuevo objeto Pasajero
+     *
+     * @param int $dniPasajero 
      * @return bool
      */
 
-    public function VerificacionPasajeros($nomPasajero, $apellidoPasajero, $dniPasajero, $telPasajero)
+    public function VerificacionPasajeros($dniPasajero)
     {
         $objPasajero = $this->getObjPasajero();
-        $validacion = false;
+        $validacion = true;
+        $i = 0;
+        while ($validacion) {
+            
+            $pasajero = $objPasajero[$i]->getNumDni();
 
-        if ( $objPasajero->getNombre() <> $nomPasajero && $objPasajero->getApellido() <> $apellidoPasajero && $objPasajero->getNumDni() <> $dniPasajero && $objPasajero->getNumTelefono() <> $telPasajero ){
+            if ($pasajero == $dniPasajero){
 
-            $validacion = true;
-        }
+                $validacion = false;
+            }
+
+            $i++;
+        }        
 
         return $validacion;
         
+    }
+
+    public function stringPasajeros()
+    {
+        $objPasajero = $this->getObjPasajero();
+        $str = "\n+-+-+-+-+-+-+-+-+-+-+-+-+\n";
+        foreach ($objPasajero as $key) {
+            
+            return $str .= $key;
+        }
     }
 
 
@@ -304,14 +341,18 @@ class ViajeFelizModificado{
 
       public function __toString()
     {
-        return "El viaje (N° ".$this->getCodigo().") con destino a ".$this->getDestino()."\ncuenta con una capacidad de ".$this->getCantMaxPers(). " pasajeros como maximo \nLos que pasajeos que viajan son: \n";
+        $objResponsitive = $this->getResponsableViaje();
+       
+        $str = "El viaje (N° ".$this->getCodigo().") con destino a ".$this->getDestino()."\ncuenta con una capacidad de ".$this->getCantMaxPers(). " pasajeros como maximo \nLos que pasajeos que viajan son: \n";
+        return ($str. $this->stringPasajeros());
     }
     
     public function __destruct()
     {
         echo "\nEl viaje se suspendio \n";
     }
+
+    
+
 }
-
-
 ?>

@@ -73,14 +73,15 @@ switch ($opciones) {
 
         echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
 
-       if (count($objViaje->getObjPasajero())> 0){
+       if (count($objViaje->getObjPasajero()) <> null){
         
         
-        if ($objViaje->VerificacionPasajeros($nomPasajero, $apellidoPasajero, $dniPasajero, $telPasajero)){
+        if ($objViaje->VerificacionPasajeros($dniPasajero)){
 
             $objViaje->AgregrarObjPasajero($nomPasajero, $apellidoPasajero, $dniPasajero, $telPasajero);
 
         }else{
+            
             echo "\nEl pasajero ya fue ingresado al viaje \n";
             
         }
@@ -111,14 +112,14 @@ switch ($opciones) {
        break;
     case '2':
         echo $objViaje;
-        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+      /*   echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
         $x = $objViaje->getObjPasajero();
         $i = 1;
         foreach ($x as $key => $value) {
             echo $i.")".$value;
             echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
             $i++;
-        }
+        } */
         break;
     case '3':           
             do {

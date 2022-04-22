@@ -14,6 +14,7 @@ class ViajeFeliz{
     private $destino;
     private $cantMaxPers;
     private $objPersona;
+    private $responsable;
 
     // Metodo contructor del objeto ViajeFelis
     public function __construct($codViaje, $lugarDestino, $limitPers, $dataobjPersona)
@@ -22,6 +23,7 @@ class ViajeFeliz{
         $this->destino = $lugarDestino;
         $this->cantMaxPers = $limitPers;
         $this->objPersona = $dataobjPersona;
+        $this->responsable = null;
         
     }
     
@@ -106,6 +108,17 @@ class ViajeFeliz{
         return $this;
     }
 
+    public function getResponsable()
+    {
+        return $this->responsable;
+    }
+
+    public function setResponsable($responsable)
+    {
+        $this->responsable = $responsable;
+        return $this;
+    }
+
     /**Metodo que nos retorna si la capacidad maxima de pasajeros ya llego a su limite
      * 
      * @return booleano $bool.
@@ -129,11 +142,11 @@ class ViajeFeliz{
     *@param int $numDNI
     */
     
-    public function AgregrarObjPersona ($nomb,$apell,$numDni)
+    public function AgregrarObjPersona ($nomb,$apell,$numDni,$numTelefono)
     {
         // array $objPersona
         $objPersona = $this->getObjPersona();// Recuperamos los datos del atributo
-        $objPersona[] = new Persona($nomb,$apell,$numDni); //Agregamos el nuevo objeto Persona al arreglo 
+        $objPersona[] = new Persona($nomb,$apell,$numDni, $numTelefono); //Agregamos el nuevo objeto Persona al arreglo 
         $this->setObjPersona($objPersona); // Setteamos el atributo con los nuevos cambios
     }
     
@@ -185,6 +198,41 @@ class ViajeFeliz{
         return $bool;
     }
 
+    public function ModificarDatos($opc, $clavePasajero, $newDato)
+    {
+        $obj =$this->getObjPersona();
+        $bool = false;
+       
+        if ($opc == 1){
+
+            $clave = "nombre";
+        }elseif ($opc == 2){
+
+            $clave = "apellido";
+        }elseif ($opc == 3){
+
+            $clave = "DNI";
+        }else{
+
+            $clave = "Telefono";
+        }
+
+      foreach ($obj as $key => $value) {
+          
+            if ($clavePasajero == $key){
+                echo $key."Indise\n";
+                echo $value."Value\n";
+                echo $clave."Clave\n";
+                echo $newDato."New Dato\n";
+                $value->CambiarDatos($clave,$newDato); 
+    
+                $bool = true;            
+            }
+        }
+
+        return $bool;
+    }
+
      /** Metodo que toma por parametro el indice del arreglo que se desea modifica y el nuevo valor a modificar.
      * retorna un valor booleano como confirmacion exitosa de la implementacion del metodo.
      * @param int $clavePasajero
@@ -227,6 +275,13 @@ class ViajeFeliz{
 
     }
 
+    public function AgregarResponsable($idEmpleado, $numLegajo,$nombre,$apellido)
+    {
+        $objResponsable = new ResponsableV($idEmpleado, $numLegajo,$nombre,$apellido);
+
+        $this->setResponsable($objResponsable);        
+    }
+
     /**
      * Metodo que toma por parametro un arreglo y le reacomoda para que no queden elementos huecos.
      * 
@@ -250,7 +305,7 @@ class ViajeFeliz{
 
       public function __toString()
     {
-        return "El viaje (N° ".$this->getCodigo().") con destino a ".$this->getDestino()."\ncuenta con una capacidad de ".$this->getCantMaxPers(). " pasajeros como maximo \nLos que pasajeos que viajan son: \n";
+        return "\nEl viaje (N° ".$this->getCodigo().") con destino a ".$this->getDestino()."\ncuenta con una capacidad de ".$this->getCantMaxPers(). " pasajeros como maximo \n"."El responsable del viaje es: ".$this->getResponsable()."\nLos que pasajeos que viajan son: \n";
     }
     
     public function __destruct()
