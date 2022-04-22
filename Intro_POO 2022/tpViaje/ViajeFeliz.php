@@ -7,6 +7,7 @@ Realice la implementación de la clase Viaje e implemente los métodos necesario
 
 Implementar un script testViaje.php que cree una instancia de la clase Viaje y presente un menú que permita cargar la información del viaje, modificar y ver sus datos. */
 
+
 class ViajeFeliz{
 
     /**Atributos de la clase viaje */
@@ -23,7 +24,7 @@ class ViajeFeliz{
         $this->destino = $lugarDestino;
         $this->cantMaxPers = $limitPers;
         $this->objPersona = $dataobjPersona;
-        $this->responsable = null;
+        $this->responsable;
         
     }
     
@@ -198,40 +199,7 @@ class ViajeFeliz{
         return $bool;
     }
 
-    public function ModificarDatos($opc, $clavePasajero, $newDato)
-    {
-        $obj =$this->getObjPersona();
-        $bool = false;
-       
-        if ($opc == 1){
-
-            $clave = "nombre";
-        }elseif ($opc == 2){
-
-            $clave = "apellido";
-        }elseif ($opc == 3){
-
-            $clave = "DNI";
-        }else{
-
-            $clave = "Telefono";
-        }
-
-      foreach ($obj as $key => $value) {
-          
-            if ($clavePasajero == $key){
-                echo $key."Indise\n";
-                echo $value."Value\n";
-                echo $clave."Clave\n";
-                echo $newDato."New Dato\n";
-                $value->CambiarDatos($clave,$newDato); 
-    
-                $bool = true;            
-            }
-        }
-
-        return $bool;
-    }
+   
 
      /** Metodo que toma por parametro el indice del arreglo que se desea modifica y el nuevo valor a modificar.
      * retorna un valor booleano como confirmacion exitosa de la implementacion del metodo.
@@ -280,6 +248,33 @@ class ViajeFeliz{
         $objResponsable = new ResponsableV($idEmpleado, $numLegajo,$nombre,$apellido);
 
         $this->setResponsable($objResponsable);        
+    }
+
+    /**
+     * Metodo para la verificacion de que el valor del atributo Dni del objeto Persona no se repita en ningun otro objeto
+     * @param int $dniPersona
+     * @return bool
+     */
+   
+    public function VerificacionPersona($dniPersona)
+    {
+        $objPersona = $this->getObjPersona();
+        $validacion = true;
+        $i = 0;
+        while ($validacion) {
+            
+            $persona = $objPersona->getNumDni();
+
+            if ($persona == $dniPersona){
+
+                $validacion = false;
+            }
+
+            $i++;
+        }        
+
+        return $validacion;
+        
     }
 
     /**
