@@ -147,7 +147,7 @@ class ViajeFeliz{
     {
         // array $objPersona
         $objPersona = $this->getObjPersona();// Recuperamos los datos del atributo
-        $objPersona[] = new Persona($nomb,$apell,$numDni, $numTelefono); //Agregamos el nuevo objeto Persona al arreglo 
+        $objPersona[] = new Pasajero($nomb,$apell,$numDni, $numTelefono); //Agregamos el nuevo objeto Persona al arreglo 
         $this->setObjPersona($objPersona); // Setteamos el atributo con los nuevos cambios
     }
     
@@ -164,9 +164,8 @@ class ViajeFeliz{
         $obj = $this->getObjPersona(); //recuperamos los datos del atributo
         foreach ($obj as $key => $value) { // recorremos el arreglo
             if ($clavePasajero == $key){ // comparamos si el indice coincide con la clave ingresada por paramentro.
-                echo $value;
-                $value->CambiarNombre($newNom); // llamamos al metodo del objeto Persona con el nuevo dato ingresado por parametro.
-                echo $value;
+                
+                $value->CambiarNombre($newNom); // llamamos al metodo del objeto Persona con el nuevo dato ingresado por parametro.                
                 $bool = true; // Cambiamos el valor de la variable para generar una confirmacion de que se implemento correctamente el metodo.
 
             }
@@ -227,6 +226,31 @@ class ViajeFeliz{
         return $bool;
     }
 
+      /** Metodo que toma por parametro el indice del arreglo que se desea modifica y el nuevo valor a modificar.
+     * retorna un valor booleano como confirmacion exitosa de la implementacion del metodo.
+     * @param int $clavePasajero
+     * @param int $newTelefono
+     * 
+     * @return booleano $bool
+    */
+
+    public function ModificarTelefono($newTelefono, $clavePasajero)
+    {
+        $bool=false;// Inicializamos la variable
+        $obj = $this->getObjPersona();//recuperamos los datos del atributo
+        foreach ($obj as $key => $value) { // recorremos el arreglo
+            if ($clavePasajero == $key){// comparamos si el indice coincide con la clave ingresada por paramentro.
+
+                $value->CambiarNumTelefono($newTelefono);// llamamos al metodo del objeto Persona con el nuevo dato ingresado por parametro.
+                $bool = true;// Cambiamos el valor de la variable para generar una confirmacion de que se implemento correctamente el metodo.
+
+            }
+       
+        
+        }
+        return $bool;
+    }
+
     /**Metodo para borrar un elemento del atributo objPersona, toma por parametro el indice que se desea eliminar
      * 
      * @param int $clavePasajero
@@ -244,6 +268,15 @@ class ViajeFeliz{
 
     }
 
+    /**
+     * Metodo para ingresar los datos del responsable del viaje, generando un objeto ResponsableV y setteando el atributi del objeto ViajeFeliz
+     * con los datos ingresados por parametro
+     * @param int $idEmpleado,
+     * @param int $numLegajo
+     * @param string $nombre
+     * @param string $apellido
+     */
+
     public function AgregarResponsable($idEmpleado, $numLegajo,$nombre,$apellido)
     {
         $objResponsable = new ResponsableV($idEmpleado, $numLegajo,$nombre,$apellido);
@@ -252,7 +285,7 @@ class ViajeFeliz{
     }
 
     /**
-     * Metodo para la verificacion de que el valor del atributo Dni del objeto Persona no se repita en ningun otro objeto
+     * Metodo para la verificacion de que el valor del atributo Dni del objeto Persona no se repita en ningun otro objeto antes de ser ingresado.
      * @param int $dniPersona
      * @return bool
      */
@@ -260,19 +293,22 @@ class ViajeFeliz{
     public function VerificacionPersona($dniPersona)
     {
         $objPersona = $this->getObjPersona();
+        
         $validacion = true;
-        $i = 0;
-        while ($validacion) {
+        
+        foreach ($objPersona as $key => $value) {
             
-            $persona = $objPersona[$i]->getNumDni();
-
+            $persona = ($value->getPersona()["DNI"]);
+            
             if ($persona == $dniPersona){
-
-                $validacion = false;
+    
+               return false;
             }
-
-            $i++;
-        }        
+    
+                
+           
+              
+        }     
 
         return $validacion;
         

@@ -2,17 +2,18 @@
 
 include('ViajeFeliz.php');
 include('ResponsableV.php');
-include "Pasajero.php";
+include ('Pasajero.php');
 
 
 
 
-$per = [new Persona("Laureano","Luna",38232325, 15),new Persona("Josefo","Giacone",26841599,16),new Persona("Margarita","Muñoz",16589633,17)];//objeto Persona ya creado
-//$objResponsable = new ResponsableV(56,"FAI-3543", "Laureano","Luna");
+$per = [new Pasajero("Laureano","Luna",38232325, 15),new Pasajero("Josefo","Giacone",26841599,16),new Pasajero("Margarita","Muñoz",16589633,17)];//objeto Persona ya creado
+
 
 $objViaje = new ViajeFeliz(3543,"Neuquen",3,$per); //Objeto viaje ya creado
-$objViaje->AgregarResponsable(56,"FAI-3543", "Laureano","Luna");
+$objViaje->AgregarResponsable(56,"FAI-3543", "Laureano","Luna");// Agregamos el objeto ResponsableV ya creado
 $i = 0;
+
 //Programa principal
 
  echo "\n♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀♂ ♀ \n";
@@ -95,7 +96,7 @@ switch ($opciones) {
         echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
 
         if ($objViaje->VerificacionPersona($dniPasajero)){
-            $objPersona[$p]=new Persona($nomPasajero, $apellidoPasajero, $dniPasajero, $numTelefono);
+            $objPersona[$p]=new Pasajero($nomPasajero, $apellidoPasajero, $dniPasajero, $numTelefono);
         }else{
             echo "\nEl pasajero ya fue ingresado al viaje\n";
         }
@@ -272,12 +273,12 @@ switch ($opciones) {
 
                                         echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
 
-                                        echo "\nIngrese el nuevo numero de DNI \n";                            
+                                        echo "\nIngrese el nuevo numero de Telefono \n";                            
                                         $nuevoPhonePasajero = trim(fgets(STDIN));
 
                                         echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
                 
-                                        if($objViaje->ModificarDNI($nuevoPhonePasajero,$numPasajero - 1)){
+                                        if($objViaje->ModificarTelefono($nuevoPhonePasajero,$numPasajero - 1)){
                                             echo "\n La modificacion se realiazo con exito\n";
                                         }
                                         break;
@@ -293,7 +294,7 @@ switch ($opciones) {
                             }else{
 
                                 echo "No hay Pasajeros ingresados para el viaje";
-                                //$opcModificacion = 5;
+                                
                                     }
                                
                     
@@ -458,26 +459,7 @@ switch ($opciones) {
 } while ($opciones < 6);
 
 
-function VerificacionDeDatos($opcionElegida)
-{
-    if ($opcionElegida == 1){
 
-        $opc = "nombre";
-    }elseif ($opcionElegida == 2){
-
-        $opc = "apellido";
-    }elseif ($opcionElegida == 3){
-
-        $opc = "DNI";
-    }else{
-
-        $opc = "Telefono";
-    }
-
-    return $opc;
-
-    
-}
 
 
 

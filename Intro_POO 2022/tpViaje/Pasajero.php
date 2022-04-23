@@ -3,7 +3,7 @@
 /** Clase Persona , tiene un atributo el cual es un arreglo con las claves: nombre, apellido, DNI.
  * correspondiendo a los datos ingresados para identificar al objeto Persona
  */
-class Persona{
+class Pasajero{
 
     private $persona;
   
@@ -52,21 +52,28 @@ class Persona{
 
     public function CambiarDatos($clave,$nuevoDato)
     {
+        $bool = false;
         $arrayPersona = $this->getPersona();
-        foreach ($arrayPersona as $key) {
-            if ( $clave == $key){
-                
-                $arrayPersona[$clave] = $nuevoDato;
+        foreach ($arrayPersona as $key=>$value) {
+            
+           
+            if ($clave == $key){
+               
+                $arrayPersona[$key] = $nuevoDato;
+                $bool = true;
             }
         }
         $this->setPersona($arrayPersona);
+        return $bool;
     }
+
     /** Metodo que settea el dato del atributo en clave nombre, invocando el metodo CambiarDato.
      * @param string $nuevoNombre
      */
     public function CambiarNombre($nuevoNombre)
     {
-        $this->CambiarDatos("nombre",$nuevoNombre);
+        $this->CambiarDatos("nombre",$nuevoNombre); 
+        
     }
 
     /**Metodo que settea el dato del atributo en la clave apellido, invocando el metodo CambiarDato.
