@@ -1,11 +1,10 @@
 <?php
 /* La empresa de Transporte de Pasajeros “Viaje Feliz” quiere registrar la información referente a sus viajes. De cada viaje se precisa almacenar el código del mismo, destino,
  cantidad máxima de pasajeros y los pasajeros del viaje.
-
 Realice la implementación de la clase Viaje e implemente los métodos necesarios para modificar los atributos de dicha clase (incluso los datos de los pasajeros).
  Utilice un array que almacene la información correspondiente a los pasajeros. Cada pasajero es un array asociativo con las claves “DNI”, “apellido” y “numero de documento”.
-
 Implementar un script testViaje.php que cree una instancia de la clase Viaje y presente un menú que permita cargar la información del viaje, modificar y ver sus datos. */
+
 
 class ViajeFeliz{
 
@@ -14,6 +13,7 @@ class ViajeFeliz{
     private $destino;
     private $cantMaxPers;
     private $objPersona;
+    private $responsable;
 
     // Metodo contructor del objeto ViajeFelis
     public function __construct($codViaje, $lugarDestino, $limitPers, $dataobjPersona)
@@ -22,6 +22,7 @@ class ViajeFeliz{
         $this->destino = $lugarDestino;
         $this->cantMaxPers = $limitPers;
         $this->objPersona = $dataobjPersona;
+        $this->responsable;
         
     }
     
@@ -106,6 +107,17 @@ class ViajeFeliz{
         return $this;
     }
 
+    public function getResponsable()
+    {
+        return $this->responsable;
+    }
+
+    public function setResponsable($responsable)
+    {
+        $this->responsable = $responsable;
+        return $this;
+    }
+
     /**Metodo que nos retorna si la capacidad maxima de pasajeros ya llego a su limite
      * 
      * @return booleano $bool.
@@ -129,88 +141,15 @@ class ViajeFeliz{
     *@param int $numDNI
     */
     
-    public function AgregrarObjPersona ($nomb,$apell,$numDni)
+    public function AgregrarObjPersona ($nomb,$apell,$numDni,$numTelefono)
     {
         // array $objPersona
         $objPersona = $this->getObjPersona();// Recuperamos los datos del atributo
-        $objPersona[] = new Persona($nomb,$apell,$numDni); //Agregamos el nuevo objeto Persona al arreglo 
+        $objPersona[] = new Pasajero($nomb,$apell,$numDni, $numTelefono); //Agregamos el nuevo objeto Persona al arreglo 
         $this->setObjPersona($objPersona); // Setteamos el atributo con los nuevos cambios
     }
     
-    /** Metodo que toma por parametro el indice del arreglo que se desea modifica y el nuevo valor a modificar.
-     * retorna un valor booleano como confirmacion exitosa de la implementacion del metodo.
-     * @param int $clavePasajero
-     * @param string $newNom
-     * 
-     * @return booleano $bool
-    */
-    public function ModificarNombre($newNom, $clavePasajero)
-    {
-        $bool=false; // Inicializamos la variable 
-        $obj = $this->getObjPersona(); //recuperamos los datos del atributo
-        foreach ($obj as $key => $value) { // recorremos el arreglo
-            if ($clavePasajero == $key){ // comparamos si el indice coincide con la clave ingresada por paramentro.
-
-                $value->CambiarNombre($newNom); // llamamos al metodo del objeto Persona con el nuevo dato ingresado por parametro.
-                $bool = true; // Cambiamos el valor de la variable para generar una confirmacion de que se implemento correctamente el metodo.
-
-            }
-       
-        
-        }
-        return $bool;
-    }
-
-     /** Metodo que toma por parametro el indice del arreglo que se desea modifica y el nuevo valor a modificar.
-     * retorna un valor booleano como confirmacion exitosa de la implementacion del metodo.
-     * @param int $clavePasajero
-     * @param string $newPellido
-     * 
-     * @return booleano $bool
-    */
-    public function ModificarApellido($newApellido, $clavePasajero)
-    {
-        $bool=false; // Inicializamos la variable
-        $obj = $this->getObjPersona(); //recuperamos los datos del atributo
-        foreach ($obj as $key => $value) { // recorremos el arreglo
-            if ($clavePasajero == $key){ // comparamos si el indice coincide con la clave ingresada por paramentro.
-
-                $value->CambiarApellido($newApellido);// llamamos al metodo del objeto Persona con el nuevo dato ingresado por parametro.
-                $bool = true;// Cambiamos el valor de la variable para generar una confirmacion de que se implemento correctamente el metodo.
-
-            }
-       
-        
-        }
-        return $bool;
-    }
-
-     /** Metodo que toma por parametro el indice del arreglo que se desea modifica y el nuevo valor a modificar.
-     * retorna un valor booleano como confirmacion exitosa de la implementacion del metodo.
-     * @param int $clavePasajero
-     * @param int $newDNI
-     * 
-     * @return booleano $bool
-    */
-
-    public function ModificarDNI($newDNI, $clavePasajero)
-    {
-        $bool=false;// Inicializamos la variable
-        $obj = $this->getObjPersona();//recuperamos los datos del atributo
-        foreach ($obj as $key => $value) { // recorremos el arreglo
-            if ($clavePasajero == $key){// comparamos si el indice coincide con la clave ingresada por paramentro.
-
-                $value->CambiarDNI($newDNI);// llamamos al metodo del objeto Persona con el nuevo dato ingresado por parametro.
-                $bool = true;// Cambiamos el valor de la variable para generar una confirmacion de que se implemento correctamente el metodo.
-
-            }
-       
-        
-        }
-        return $bool;
-    }
-
-    /**Metodo para borrar un elemento del atributo objPersona, toma por parametro el indice que se desea eliminar
+       /**Metodo para borrar un elemento del atributo objPersona, toma por parametro el indice que se desea eliminar
      * 
      * @param int $clavePasajero
      *  
@@ -225,6 +164,52 @@ class ViajeFeliz{
        
        
 
+    }
+
+    /**
+     * Metodo para ingresar los datos del responsable del viaje, generando un objeto ResponsableV y setteando el atributi del objeto ViajeFeliz
+     * con los datos ingresados por parametro
+     * @param int $idEmpleado,
+     * @param int $numLegajo
+     * @param string $nombre
+     * @param string $apellido
+     */
+
+    public function AgregarResponsable($idEmpleado, $numLegajo,$nombre,$apellido)
+    {
+        $objResponsable = new ResponsableV($idEmpleado, $numLegajo,$nombre,$apellido);
+
+        $this->setResponsable($objResponsable);        
+    }
+
+    /**
+     * Metodo para la verificacion de que el valor del atributo Dni del objeto Persona no se repita en ningun otro objeto antes de ser ingresado.
+     * @param int $dniPersona
+     * @return bool
+     */
+   
+    public function VerificacionPersona($dniPersona)
+    {
+        $objPersona = $this->getObjPersona();
+        
+        $validacion = true;
+        
+        foreach ($objPersona as $key => $value) {
+            
+            $persona = ($value->getPersona()["DNI"]);
+            
+            if ($persona == $dniPersona){
+    
+               return false;
+            }
+    
+                
+           
+              
+        }     
+
+        return $validacion;
+        
     }
 
     /**
@@ -248,9 +233,9 @@ class ViajeFeliz{
         return $arrayReordenado; // retornamos el arreglo ordenado
     }
 
-      public function __toString()
+    public function __toString()
     {
-        return "El viaje (N° ".$this->getCodigo().") con destino a ".$this->getDestino()."\ncuenta con una capacidad de ".$this->getCantMaxPers(). " pasajeros como maximo \nLos que pasajeos que viajan son: \n";
+        return "\nEl viaje (N° ".$this->getCodigo().") con destino a ".$this->getDestino()."\ncuenta con una capacidad de ".$this->getCantMaxPers(). " pasajeros como maximo \n"."El responsable del viaje es: ".$this->getResponsable()."\nLos que pasajeos que viajan son: \n";
     }
     
     public function __destruct()
