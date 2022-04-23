@@ -221,11 +221,12 @@ switch ($opciones) {
 
                                         echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
                 
-                                        if($objViaje->ModificarNombre($nuevoNombre,$numPasajero - 1)){
+                                             
+                                        $objPasajero = $objViaje->getObjPersona()[$numPasajero - 1]; 
 
+                                        if($objPasajero->CambiarDatos("nombre",$nuevoNombre)){
                                             echo "\n La modificacion se realiazo con exito\n";
                                         }
-                                        
                                                             
                                         break;
                                     case '2':
@@ -240,7 +241,9 @@ switch ($opciones) {
 
                                         echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
                                         
-                                        if($objViaje->ModificarApellido($nuevoApellido, $numPasajero - 1)){
+                                        $objPasajero = $objViaje->getObjPersona()[$numPasajero - 1]; 
+
+                                        if($objPasajero->CambiarDatos("apellido",$nuevoApellido)){
                                             echo "\n La modificacion se realiazo con exito\n";
                                         }
                                         
@@ -259,7 +262,9 @@ switch ($opciones) {
 
                                         echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
                 
-                                        if($objViaje->ModificarDNI($nuevoDNI,$numPasajero - 1)){
+                                        $objPasajero = $objViaje->getObjPersona()[$numPasajero - 1]; 
+
+                                        if($objPasajero->CambiarDatos("DNI",$nuevoDNI)){
                                             echo "\n La modificacion se realiazo con exito\n";
                                         }
                                             
@@ -278,7 +283,9 @@ switch ($opciones) {
 
                                         echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
                 
-                                        if($objViaje->ModificarTelefono($nuevoPhonePasajero,$numPasajero - 1)){
+                                        $objPasajero = $objViaje->getObjPersona()[$numPasajero - 1]; 
+
+                                        if($objPasajero->CambiarDatos("Telefono",$nuevoPhonePasajero)){
                                             echo "\n La modificacion se realiazo con exito\n";
                                         }
                                         break;

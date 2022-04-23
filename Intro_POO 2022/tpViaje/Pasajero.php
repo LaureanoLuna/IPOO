@@ -67,40 +67,6 @@ class Pasajero{
         return $bool;
     }
 
-    /** Metodo que settea el dato del atributo en clave nombre, invocando el metodo CambiarDato.
-     * @param string $nuevoNombre
-     */
-    public function CambiarNombre($nuevoNombre)
-    {
-        $this->CambiarDatos("nombre",$nuevoNombre); 
-        
-    }
-
-    /**Metodo que settea el dato del atributo en la clave apellido, invocando el metodo CambiarDato.
-     * @param string $nuevoApellido
-     */
-    public function CambiarApellido($nuevoApellido)
-    {
-        $this->CambiarDatos("apellido",$nuevoApellido);
-    }
-
-    /**Metodo que settea el dato del atributo en clave DNI, invocando el metodo CambiarDato.
-     * @param int $nuevoDNI
-     */
-    public function CambiarDNI($nuevoDNI)
-    {
-        $this->CambiarDatos("DNI", $nuevoDNI);
-    }
-
-     /**Metodo que settea el dato del atributo en clave Telefono, invocando el metodo CambiarDato.
-     * @param int $nuevoDNI
-     */
-    public function CambiarNumTelefono($nuevoTelefono)
-    {
-        $this->CambiarDatos("Telefono", $nuevoTelefono);
-    }
-
-
     /**Metodo implemetado para poder mostrar los datos de dicho objeto */
     public function __toString()
     {
