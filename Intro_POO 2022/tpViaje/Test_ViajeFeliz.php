@@ -2,7 +2,7 @@
 
 include('ViajeFeliz.php');
 include('ResponsableV.php');
-include('Personas.php');
+include "Pasajero.php";
 
 
 

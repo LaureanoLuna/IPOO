@@ -164,8 +164,9 @@ class ViajeFeliz{
         $obj = $this->getObjPersona(); //recuperamos los datos del atributo
         foreach ($obj as $key => $value) { // recorremos el arreglo
             if ($clavePasajero == $key){ // comparamos si el indice coincide con la clave ingresada por paramentro.
-
+                echo $value;
                 $value->CambiarNombre($newNom); // llamamos al metodo del objeto Persona con el nuevo dato ingresado por parametro.
+                echo $value;
                 $bool = true; // Cambiamos el valor de la variable para generar una confirmacion de que se implemento correctamente el metodo.
 
             }
@@ -263,7 +264,7 @@ class ViajeFeliz{
         $i = 0;
         while ($validacion) {
             
-            $persona = $objPersona->getNumDni();
+            $persona = $objPersona[$i]->getNumDni();
 
             if ($persona == $dniPersona){
 
@@ -298,7 +299,7 @@ class ViajeFeliz{
         return $arrayReordenado; // retornamos el arreglo ordenado
     }
 
-      public function __toString()
+    public function __toString()
     {
         return "\nEl viaje (N° ".$this->getCodigo().") con destino a ".$this->getDestino()."\ncuenta con una capacidad de ".$this->getCantMaxPers(). " pasajeros como maximo \n"."El responsable del viaje es: ".$this->getResponsable()."\nLos que pasajeos que viajan son: \n";
     }
