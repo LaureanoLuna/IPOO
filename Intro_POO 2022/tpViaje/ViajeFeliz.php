@@ -7,6 +7,7 @@ Realice la implementación de la clase Viaje e implemente los métodos necesario
 
 Implementar un script testViaje.php que cree una instancia de la clase Viaje y presente un menú que permita cargar la información del viaje, modificar y ver sus datos. */
 
+
 class ViajeFeliz{
 
     /**Atributos de la clase viaje */
@@ -14,6 +15,7 @@ class ViajeFeliz{
     private $destino;
     private $cantMaxPers;
     private $objPersona;
+    private $responsable;
 
     // Metodo contructor del objeto ViajeFelis
     public function __construct($codViaje, $lugarDestino, $limitPers, $dataobjPersona)
@@ -22,6 +24,7 @@ class ViajeFeliz{
         $this->destino = $lugarDestino;
         $this->cantMaxPers = $limitPers;
         $this->objPersona = $dataobjPersona;
+        $this->responsable;
         
     }
     
@@ -106,6 +109,17 @@ class ViajeFeliz{
         return $this;
     }
 
+    public function getResponsable()
+    {
+        return $this->responsable;
+    }
+
+    public function setResponsable($responsable)
+    {
+        $this->responsable = $responsable;
+        return $this;
+    }
+
     /**Metodo que nos retorna si la capacidad maxima de pasajeros ya llego a su limite
      * 
      * @return booleano $bool.
@@ -129,11 +143,11 @@ class ViajeFeliz{
     *@param int $numDNI
     */
     
-    public function AgregrarObjPersona ($nomb,$apell,$numDni)
+    public function AgregrarObjPersona ($nomb,$apell,$numDni,$numTelefono)
     {
         // array $objPersona
         $objPersona = $this->getObjPersona();// Recuperamos los datos del atributo
-        $objPersona[] = new Persona($nomb,$apell,$numDni); //Agregamos el nuevo objeto Persona al arreglo 
+        $objPersona[] = new Persona($nomb,$apell,$numDni, $numTelefono); //Agregamos el nuevo objeto Persona al arreglo 
         $this->setObjPersona($objPersona); // Setteamos el atributo con los nuevos cambios
     }
     
@@ -150,8 +164,9 @@ class ViajeFeliz{
         $obj = $this->getObjPersona(); //recuperamos los datos del atributo
         foreach ($obj as $key => $value) { // recorremos el arreglo
             if ($clavePasajero == $key){ // comparamos si el indice coincide con la clave ingresada por paramentro.
-
+                echo $value;
                 $value->CambiarNombre($newNom); // llamamos al metodo del objeto Persona con el nuevo dato ingresado por parametro.
+                echo $value;
                 $bool = true; // Cambiamos el valor de la variable para generar una confirmacion de que se implemento correctamente el metodo.
 
             }
@@ -184,6 +199,8 @@ class ViajeFeliz{
         }
         return $bool;
     }
+
+   
 
      /** Metodo que toma por parametro el indice del arreglo que se desea modifica y el nuevo valor a modificar.
      * retorna un valor booleano como confirmacion exitosa de la implementacion del metodo.
@@ -227,6 +244,40 @@ class ViajeFeliz{
 
     }
 
+    public function AgregarResponsable($idEmpleado, $numLegajo,$nombre,$apellido)
+    {
+        $objResponsable = new ResponsableV($idEmpleado, $numLegajo,$nombre,$apellido);
+
+        $this->setResponsable($objResponsable);        
+    }
+
+    /**
+     * Metodo para la verificacion de que el valor del atributo Dni del objeto Persona no se repita en ningun otro objeto
+     * @param int $dniPersona
+     * @return bool
+     */
+   
+    public function VerificacionPersona($dniPersona)
+    {
+        $objPersona = $this->getObjPersona();
+        $validacion = true;
+        $i = 0;
+        while ($validacion) {
+            
+            $persona = $objPersona[$i]->getNumDni();
+
+            if ($persona == $dniPersona){
+
+                $validacion = false;
+            }
+
+            $i++;
+        }        
+
+        return $validacion;
+        
+    }
+
     /**
      * Metodo que toma por parametro un arreglo y le reacomoda para que no queden elementos huecos.
      * 
@@ -248,9 +299,9 @@ class ViajeFeliz{
         return $arrayReordenado; // retornamos el arreglo ordenado
     }
 
-      public function __toString()
+    public function __toString()
     {
-        return "El viaje (N° ".$this->getCodigo().") con destino a ".$this->getDestino()."\ncuenta con una capacidad de ".$this->getCantMaxPers(). " pasajeros como maximo \nLos que pasajeos que viajan son: \n";
+        return "\nEl viaje (N° ".$this->getCodigo().") con destino a ".$this->getDestino()."\ncuenta con una capacidad de ".$this->getCantMaxPers(). " pasajeros como maximo \n"."El responsable del viaje es: ".$this->getResponsable()."\nLos que pasajeos que viajan son: \n";
     }
     
     public function __destruct()

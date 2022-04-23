@@ -1,11 +1,17 @@
  <?php
 
 include('ViajeFeliz.php');
-include('Persona.php');
+include('ResponsableV.php');
+include "Pasajero.php";
 
-$per = [new Persona("Laureano","Luna",38232325),new Persona("Josefo","Giacone",26841599),new Persona("Margarita","Muñoz",16589633)];//objeto Persona ya creado
+
+
+
+$per = [new Persona("Laureano","Luna",38232325, 15),new Persona("Josefo","Giacone",26841599,16),new Persona("Margarita","Muñoz",16589633,17)];//objeto Persona ya creado
+//$objResponsable = new ResponsableV(56,"FAI-3543", "Laureano","Luna");
 
 $objViaje = new ViajeFeliz(3543,"Neuquen",3,$per); //Objeto viaje ya creado
+$objViaje->AgregarResponsable(56,"FAI-3543", "Laureano","Luna");
 $i = 0;
 //Programa principal
 
@@ -39,7 +45,31 @@ switch ($opciones) {
     echo "\nCapacidad de pasajeros: ";
     $capacidadViaje = trim(fgets(STDIN));
     echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+
+    echo "\nDatos del Empleado Resposanble del Viaje \n";
+    echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+    echo "\nNombre: ";
+    $nomEmpleado = trim(fgets(STDIN));
+    echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+
+    echo "\nApellido: ";
+    $apellidoEmpleado = trim(fgets(STDIN));
+    echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+
+    echo "\nNumero Identificatorio del Empleado Responsable: ";
+    $idEmpleado = trim(fgets(STDIN));
+    echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+
+    echo "\nNumero de Legajo del Empleado Responsable: ";
+    $numLegajo = trim(fgets(STDIN));
+    echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+
+    
+
     $p = 0;
+
+    echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+    echo "\nIngresar los datos de los Pasajeros\n";
 
     do {
         echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
@@ -59,7 +89,16 @@ switch ($opciones) {
 
         echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
 
-        $objPersona[$p]=new Persona($nomPasajero, $apellidoPasajero, $dniPasajero);
+        echo "\nNumero de Telefono: ";        
+        $numTelefono = trim(fgets(STDIN));
+
+        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+
+        if ($objViaje->VerificacionPersona($dniPasajero)){
+            $objPersona[$p]=new Persona($nomPasajero, $apellidoPasajero, $dniPasajero, $numTelefono);
+        }else{
+            echo "\nEl pasajero ya fue ingresado al viaje\n";
+        }
 
         echo "\n¿ Desea Ingresar otro pasajero ?\n";
         $peppol = trim(fgets(STDIN));
@@ -76,10 +115,12 @@ switch ($opciones) {
     } while ($peppol == "si");
 
     $objViaje = new ViajeFeliz($codViaje,$destino,$capacidadViaje,$objPersona);
+    $objViaje->AgregarResponsable($idEmpleado,$numLegajo,$nomEmpleado,$apellidoEmpleado);
        
        break;
     case '2':
         echo $objViaje;
+        
         echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
         $x = $objViaje->getObjPersona();
         $i = 1;
@@ -89,7 +130,7 @@ switch ($opciones) {
             $i++;
         }
         break;
-    case '3':           
+    case '3':                          
             do {
                 echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
 
@@ -97,9 +138,10 @@ switch ($opciones) {
                 echo "\n1)Agregar mas pasajeros \n";// agrega un objeto Personal al atributo del objeto viaje
                 echo "\n2)Modificar los datos de los pasajeros ya ingresados \n";// ingresa a el siguente menu para poder modificar valores especificos del objeto Persona
                 echo "\n3)Borrar algun pasajero ya ingresado \n";// borra y reacomoda los elementos del atributo para que no queden huecos
-                echo "\n4)Cambiar destino del viaje \n";// settea el atributo setDestino con un valor ingresado por teclado 
-                echo "\n5)Cambiar la capacidad del viaje \n";// settea el atributo setCapMaxPers con un valor ingresado por teclado
-                echo "\n6)Volver al menu anterior \n";// regresa al menu anterior
+                echo "\n4)Modificar los datos del responsable del viaje.\n";
+                echo "\n5)Cambiar destino del viaje \n";// settea el atributo setDestino con un valor ingresado por teclado 
+                echo "\n6)Cambiar la capacidad del viaje \n";// settea el atributo setCapMaxPers con un valor ingresado por teclado
+                echo "\n7)Volver al menu anterior \n";// regresa al menu anterior
                 $opc = trim(fgets(STDIN));
 
                 echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
@@ -128,97 +170,136 @@ switch ($opciones) {
                     $dniPasajeroNuevo = trim(fgets(STDIN));
 
                     echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
-    
-                    $objViaje->AgregrarObjPersona($nomPasajeroNuevo,$apellidoPasajeroNuevo,$dniPasajeroNuevo);
 
-                    echo "\nEl pasajero fue agregado con exito\n";
+                    echo "\nNumero de Telefono: ";                   
+                    $numPasajeroTelefono = trim(fgets(STDIN));
+
+                    echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+    
+                    if ($objViaje->VerificacionPersona($dniPasajeroNuevo)){
+
+                        $objViaje->AgregrarObjPersona($nomPasajeroNuevo,$apellidoPasajeroNuevo,$dniPasajeroNuevo, $numPasajeroTelefono);
+                        echo "\nEl pasajero fue agregado con exito\n";
+                    }else{
+
+                        echo "\nEl pasajero ya fue ingresado\n";
+                        
+                    }
+
+                   
                    }
     
                    break;
                 case '2':       
     
                    do {
-                    echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+                       if (count($objViaje->getObjPersona()) <> null)
+                            {
+                                echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
 
-                    echo "\nDato que desea modificar \n";
-                    echo "\n1) Modificar nombre \n";//Permite settear el atributo nombre del objeto
-                    echo "\n2) Modificar apellido \n";//Permite settear el atributo apellido del objeto
-                    echo "\n3) Modificar numero de DNI \n";//Permite settear el atributo DNI del objeto
-                    echo "\n4) Volver al menu anterior\n";//Vuelve a menu anterior
-                    
-                    $opcModificacion =trim(fgets(STDIN));
-
-                    echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+                                echo "\nDato que desea modificar \n";
+                                echo "\n1) Modificar nombre \n";//Permite settear el atributo con la clave correspondiente al nombre del objeto
+                                echo "\n2) Modificar apellido \n";//Permite settear el atributo con la clave correspondiente al apellido del objeto
+                                echo "\n3) Modificar numero de DNI \n";//Permite settear el atributo con la clave correspondiente al DNI del objeto
+                                echo "\n4) Modificar numero de Telefono \n";//Permite settear el atributo con la clave correspondiente al Numero de telefono del objeto
+                                echo "\n5) Volver al menu anterior \n";
+                                $opcModificacion =trim(fgets(STDIN));                       
                       
-                    switch ($opcModificacion) {
-                        case '1':
-                            echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+                            switch ($opcModificacion) 
+                                {
+                                    case '1':
+                                        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
 
-                            echo "\nIndique el numero del pasajero ";                            
-                            $numPasajero =trim(fgets(STDIN));
+                                        echo "\nIndique el numero del pasajero ";                            
+                                        $numPasajero =trim(fgets(STDIN));
 
-                            echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+                                        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
 
-                            echo "\nIngrese el nuevo nombre ";                            
-                            $nuevoNombre = trim(fgets(STDIN));
+                                        echo "\nIngrese el nuevo nombre ";                            
+                                        $nuevoNombre = trim(fgets(STDIN));
 
-                            echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
-    
-                            if($objViaje->ModificarNombre($nuevoNombre,$numPasajero - 1)){
+                                        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+                
+                                        if($objViaje->ModificarNombre($nuevoNombre,$numPasajero - 1)){
 
-                                echo "\n La modificacion se realiazo con exito\n";
-                            }
+                                            echo "\n La modificacion se realiazo con exito\n";
+                                        }
+                                        
+                                                            
+                                        break;
+                                    case '2':
+                                        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+
+                                        echo "\nIndique el numero del pasajero ";                            
+                                        $numPasajero =trim(fgets(STDIN));
+
+                                        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+                                        echo "\nIngrese el nuevo apellido ";                           
+                                        $nuevoApellido = trim(fgets(STDIN));
+
+                                        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+                                        
+                                        if($objViaje->ModificarApellido($nuevoApellido, $numPasajero - 1)){
+                                            echo "\n La modificacion se realiazo con exito\n";
+                                        }
+                                        
+                                    
+                                        break;
+                                    case '3':
+                                        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+
+                                        echo "\nIndique el numero del pasajero \n";                            
+                                        $numPasajero =trim(fgets(STDIN));
+
+                                        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+
+                                        echo "\nIngrese el nuevo numero de DNI \n";                            
+                                        $nuevoDNI = trim(fgets(STDIN));
+
+                                        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+                
+                                        if($objViaje->ModificarDNI($nuevoDNI,$numPasajero - 1)){
+                                            echo "\n La modificacion se realiazo con exito\n";
+                                        }
+                                            
+                                        break;
+                                    
+                                    case '4':
+                                        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+
+                                        echo "\nIndique el numero del pasajero \n";                            
+                                        $numPasajero =trim(fgets(STDIN));
+
+                                        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+
+                                        echo "\nIngrese el nuevo numero de DNI \n";                            
+                                        $nuevoPhonePasajero = trim(fgets(STDIN));
+
+                                        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+                
+                                        if($objViaje->ModificarDNI($nuevoPhonePasajero,$numPasajero - 1)){
+                                            echo "\n La modificacion se realiazo con exito\n";
+                                        }
+                                        break;
+                                    case '5':
+                                        $opcModificacion = 6;
+                                        break;    
+                                        
+                                    default:
+                                        echo "\nIngrese una opcion correcta\n";
+                                        break; 
+                                }
                             
-                                                   
-                            break;
-                        case '2':
-                            echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+                            }else{
 
-                            echo "\nIndique el numero del pasajero ";                            
-                            $numPasajero =trim(fgets(STDIN));
+                                echo "No hay Pasajeros ingresados para el viaje";
+                                //$opcModificacion = 5;
+                                    }
+                               
+                    
+            } while ($opcModificacion < 6);
 
-                            echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
-                            echo "\nIngrese el nuevo apellido ";                           
-                            $nuevoApellido = trim(fgets(STDIN));
-
-                            echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
-                            
-                            if($objViaje->ModificarApellido($nuevoApellido, $numPasajero - 1)){
-                                echo "\n La modificacion se realiazo con exito\n";
-                            }
-                            
-                           
-                            break;
-                        case '3':
-                            echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
-
-                            echo "\nIndique el numero del pasajero \n";                            
-                            $numPasajero =trim(fgets(STDIN));
-
-                            echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
-
-                            echo "\nIngrese el nuevo numero de DNI \n";                            
-                            $nuevoDNI = trim(fgets(STDIN));
-
-                            echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
-    
-                            if($objViaje->ModificarDNI($nuevoDNI,$numPasajero - 1)){
-                                echo "\n La modificacion se realiazo con exito\n";
-                            }
-                                   
-                            break;
-                        
-                        case '4':
-                            $opcModificacion = 4;;
-                            break;
-                            
-                            
-                        default:
-                            echo "\nIngrese una opcion correcta\n";
-                            break;
-                    }
-                   } while ($opcModificacion < 4);
-                   
+             
                    break;
                 case '3':
                    if (count($objViaje->getObjPersona()) > 0){
@@ -245,6 +326,62 @@ switch ($opciones) {
                    }
                    break;
                 case '4':
+                    if ($objViaje->getResponsable() <> null){
+                        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+                        echo "\nDato que desea modificar \n";
+                                echo "\n1) Modificar nombre \n";//Permite settear el atributo con la clave correspondiente al nombre del objeto
+                                echo "\n2) Modificar apellido \n";//Permite settear el atributo con la clave correspondiente al apellido del objeto
+                                echo "\n3) Modificar numero de Legajo \n";//Permite settear el atributo con la clave correspondiente al DNI del objeto
+                                echo "\n4) Modificar numero de Identificacion \n";//Permite settear el atributo con la clave correspondiente al Numero de telefono del objeto
+                                $opcEmpleadoResponsable =trim(fgets(STDIN));
+
+                                switch ($opcEmpleadoResponsable) {
+                                    case '1':
+                                        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+                                        echo "\nIngrese el nuevo nombre: ";                            
+                                        $newNombre = trim(fgets(STDIN));
+
+                                        $obj =$objViaje->getResponsable();
+                                        $obj->setNombre($newNombre);
+                                        break;
+                                    case '2':
+                                        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+                                        echo "\nIngrese el nuevo apellido: ";                            
+                                        $newApellido = trim(fgets(STDIN));
+
+                                        $obj =$objViaje->getResponsable();
+                                        $obj->setApellido($newApellido);
+                                        break;
+                                    case '3':
+                                        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+                                        echo "\nIngrese el dato del Legajo: ";                            
+                                        $newLegajo = trim(fgets(STDIN));
+
+                                        $obj =$objViaje->getResponsable();
+                                        $obj->setNumLegajo($newLegajo);
+                                        
+                                        break;
+                                    case '4':
+                                        echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
+                                        echo "\nIngrese el dato del Identificacion: ";                            
+                                        $newidEmpleado = trim(fgets(STDIN));
+
+                                        $obj =$objViaje->getResponsable();
+                                        $obj->setIdEmpleado($newLegajo);
+                                        
+                                        break;
+
+                                    
+                                    default:
+                                        echo "\nIngrese una opcion valida\n";
+                                        break;
+                                }
+                    }else{
+                        echo "\nNo se han ingresado datos del Responsable\n";
+                    }
+                    
+                    break;
+                case '5':
                     echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
                     
                     echo "\nIngrese el nuevo destino del viaje  ";                   
@@ -256,7 +393,7 @@ switch ($opciones) {
 
                     break;
                     
-                case '5':
+                case '6':
                     echo "\n○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•○•\n";
                     
                     echo "\nIngrese la nueva capacidad de pasajeros del viaje ";                    
@@ -268,8 +405,8 @@ switch ($opciones) {
 
                     break;
                 
-                    case '6':
-                        $opc = 6;
+                    case '7':
+                        $opc = 7;
                         break;
                    
                 default:
@@ -277,7 +414,7 @@ switch ($opciones) {
                     break;
                 
             }
-           } while ($opc < 6 );
+           } while ($opc < 7 );
     
         break;
     case '4':/**idea mia esta opcion del menu,
@@ -319,6 +456,28 @@ switch ($opciones) {
         break;
 }
 } while ($opciones < 6);
+
+
+function VerificacionDeDatos($opcionElegida)
+{
+    if ($opcionElegida == 1){
+
+        $opc = "nombre";
+    }elseif ($opcionElegida == 2){
+
+        $opc = "apellido";
+    }elseif ($opcionElegida == 3){
+
+        $opc = "DNI";
+    }else{
+
+        $opc = "Telefono";
+    }
+
+    return $opc;
+
+    
+}
 
 
 
