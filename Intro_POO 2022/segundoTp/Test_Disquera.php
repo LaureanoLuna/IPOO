@@ -10,14 +10,21 @@ $objPersona = new Persona($persona,$dniPersona);
 
 $objDisquera = new Disquera("Nahuel 696", $objPersona);
 
-echo $objDisquera;
-
+//echo $objDisquera;
+$objDisquera->abrirDisquera(8,30);
 if ($objDisquera->dentroHorarioAtencion(10,30))
 {
-    echo "\n esta \n". $objDisquera->getEstado();
+    echo "\n esta \n". $objDisquera->getEstado()."\n";
 }
 
-//$objDisquera->abrirDisquera(22,0);
+if($objDisquera->abrirDisquera(22,0)){
+
+    echo "\nAbrio\n";
+}
+else{
+    $objDisquera->cerrarDisquera(20,0);
+    echo "\nEsta cerrado\n";
+}
 //print_r($objDisquera);
-$objDisquera->abrirDisquera(8,30);
-$objDisquera->cerrarDisquera(20,0);
+
+//$objDisquera->cerrarDisquera(20,0);

@@ -85,12 +85,17 @@ class Disquera{
     encontrarse abierta en ese horario y false en caso contrario. */
 
     public function dentroHorarioAtencion($hora,$minutos)
-    {
+    {   $horaApertura = $this->getHora_Desde()["hs"];
+        $horaCierre = $this->getHora_Hasta()["hs"];
+        $minutoApertura = $this->getHora_Desde()["min"];
+        $minutosCierre = $this->getHora_Hasta()["min"];
         $x = false;
-        if (($this->getHora_Desde()["hs"]) <= $hora && ($this->getHora_Hasta()["hs"]) >= $hora)
+        if ($horaApertura <= $hora && $horaCierre >= $hora)
         {
-           if ($minutos >= ($this->getHora_Desde()["min"]) && $minutos <= ($this->getHora_Desde()["min"]))
+          
+           if ($minutos >= $minutoApertura && $minutos <= $minutosCierre)
            {
+               
                $x = true;
            }
         } 
@@ -126,7 +131,7 @@ class Disquera{
     public function __toString()
     {
         return "El comercio de ". ($this-> getDuenio()["apellido"]).", ". ($this->getDuenio()["nombre"])."\n".
-        "en la direccion ". $this->getDireccion()."\n". "Abre a las ". ($this->getHora_Desde()["hs"]).":".($this->getHora_Desde()["min"]). "hs, hasta las ".($this->getHora_Hasta()["hs"]). ":". ($this->getHora_Hasta()["min"]). "hs \nSe encuentra ". $this->getEstado(). " en este momento. \n";
+        "en la direccion ". $this->getDireccion()."\n". "Abre a las 0". ($this->getHora_Desde()["hs"]).":0".($this->getHora_Desde()["min"]). "hs, hasta las ".($this->getHora_Hasta()["hs"]). ":". ($this->getHora_Hasta()["min"]). "hs \nSe encuentra ". $this->getEstado(). " en este momento. \n";
     }
 
 
