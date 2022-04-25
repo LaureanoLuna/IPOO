@@ -467,7 +467,6 @@ switch ($opciones) {
 
 
 
+//print_r($objViaje);
 
 
-
-//print_r($archivoViajes); 
