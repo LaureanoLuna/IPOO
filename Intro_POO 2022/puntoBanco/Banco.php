@@ -5,7 +5,7 @@ class Banco{
     private $objMostrador;
     private $numBanco;
 
-    public function __construct($cantMostrador, $bancoNum)
+    public function __construct($bancoNum)
     {
         $this->objMostrador;
         $this->numBanco = $bancoNum;
@@ -52,18 +52,48 @@ class Banco{
         return $this;
     }
 
-    public function CreacionMostrador($tramite,$cantMostrador)
+    public function CreacionMostrador($tramite)
     {
         $mostrador = $this->getObjMostrador();
-
-        for ($i=0; count($this->getObjMostrador()) == $cantMostrador ; $i++) { 
-            
-            $mostrador[$i] = new Mostrador($tramite);
-        }
-
+        $mostrador[]= new Mostrador($tramite);
         $this->setObjMostrador($mostrador);
+
         return true;
     }
+
+    public function QueMostradorAtiendeTramite($unTramite)
+    {
+        $objMostrador = $this->getObjMostrador();
+        foreach ($objMostrador as $key => $value) {
+            if ($objMostrador->getTipo_Tramite() == $unTramite){
+                $mostradoresDisponibles[] = $value;
+            }
+        }
+
+        return $mostradoresDisponibles;
+    }
+
+    public function MejorMostradorPara($unTramite)
+    {
+        $mostradores = $this->QueMostradorAtiendeTramite($unTramite);
+        $pivote = $mostradores->getCantPersCola;
+        foreach ($mostradores as $key => $value){
+            $cantPers = count($value->getPersEnCola());
+            if ($cantPers < $pivote){
+                $pivote = $cantPers;
+                $mostradorIdeal = $value;
+            }
+            else{
+                $mostradorIdeal = null;
+            }
+        }
+
+        return $mostradorIdeal;
+    }
+
+    
+
+
 
     public function StringMostrador()
     {

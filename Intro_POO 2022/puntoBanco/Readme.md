@@ -10,14 +10,17 @@ tiene un horario de creación y un horario de resolución. Implemente los siguie
 
 * c) Redefinir el método _ _toString() para que retorne la información de los atributos de las clases.
 
-* d) mostrador–>atiende($unTramite): devuelve true o false  indicando si el tramite se puede atender o no
+* d) mostrador–>atiende($unTramite): devuelve true o 
+    false indicando si el tramite se puede atender o no
     en el mostrador; note que el tipo de trámite correspondiente a unTramite tiene que coincidir con
     alguno de los tipos de trámite que atiende el mostrador.
 
-* e) banco–>mostradoresQueAtienden($unTramite): retorna la colección de todos los mostradores que
+* e) banco–>mostradoresQueAtienden($unTramite): retorna la 
+    colección de todos los mostradores que
     atienden ese trámite.
 
-* f) banco–>mejorMostradorPara($unTramite): retorna el mostrador con la cola más corta con espacio
+* f) banco–>mejorMostradorPara($unTramite): retorna el 
+    mostrador con la cola más corta con espacio
     para al menos una persona más y que atienda ese trámite; si ningun mostrador tiene espacio, retorna
     null.
 
