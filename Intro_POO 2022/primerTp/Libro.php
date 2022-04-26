@@ -22,15 +22,19 @@ class Libro
     private $tituloLibro;
     private $anioEdicion;
     private $nomEditorial;
-    private $nombAutor;
+    private $objAutor;
+    private $cantPag;
+    private $sinopsis;
 
-    public function __construct($numISBN, $titleBook, $anioEditado, $editorial, $autor)
+    public function __construct($numISBN, $titleBook, $anioEditado, $editorial, $autor, $numPag, $sinopsisLibro)
     {
         $this->codISBN = $numISBN;
         $this->tituloLibro = $titleBook;
         $this->anioEdicion = $anioEditado;
         $this->nomEditorial = $editorial;
-        $this->nombAutor = $autor;
+        $this->objAutor = $autor;
+        $this->cantPag = $numPag;
+        $this->sinopsis = $sinopsisLibro;
     }
 
     /**
@@ -114,23 +118,69 @@ class Libro
     }
 
     /**
-     * Get the value of nombAutor
+     * Get the value of ObjAutor
      */ 
-    public function getNombAutor()
+    public function getObjAutor()
     {
-        return $this->nombAutor;
+        return $this->objAutor;
     }
 
     /**
-     * Set the value of nombAutor
+     * Set the value of ObjAutor
      *
      * @return  self
      */ 
-    public function setNombAutor($nombAutor)
+    public function setObjAutor($objAutor)
     {
-        $this->nombAutor = $nombAutor;
+        $this->objAutor = $objAutor;
 
         return $this;
+    }
+
+     /**
+     * Get the value of cantPag
+     */ 
+    public function getCantPag()
+    {
+        return $this->cantPag;
+    }
+
+    /**
+     * Set the value of cantPag
+     *
+     * @return  self
+     */ 
+    public function setCantPag($cantPag)
+    {
+        $this->cantPag = $cantPag;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of sinopsis
+     */ 
+    public function getSinopsis()
+    {
+        return $this->sinopsis;
+    }
+
+    /**
+     * Set the value of sinopsis
+     *
+     * @return  self
+     */ 
+    public function setSinopsis($sinopsis)
+    {
+        $this->sinopsis = $sinopsis;
+
+        return $this;
+    }
+
+    public function StringAutor()
+    {
+        $autor = $this->getObjAutor();
+        return $autor;
     }
 
     public function perteneceEditorial($peditorial)
@@ -146,6 +196,16 @@ class Libro
 
     public function __toString()
     {
-        return "El libro es ".$this->getTituloLibro()."\n"."Autor ".$this->getNombAutor()."\nDe la editorial ".$this->getNomEditorial()."\nCodigo de ISBN ".$this->getCodISBN()."\nPublicado en el ".$this->getAnioEdicion();
+       $str =  "El libro es ".$this->getTituloLibro()."\n
+                Autor ".$this->StringAutor()."\n
+                Numero de Paginas".$this->getCantPag()."\n
+                Sinapsis".$this->getSinopsis()."\n
+                Editorial ".$this->getNomEditorial()."\n
+                Codigo de ISBN ".$this->getCodISBN()."\n
+                Publicado en el ".$this->getAnioEdicion();
+        
+        return $str;
     }
+
+   
 }

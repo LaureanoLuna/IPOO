@@ -4,50 +4,89 @@ los metodos deberian ser, caminar, pararse, saltar, hablar, comer, beber, dormi,
 class Persona {
 
     private $nombre;
-    private $estatura;
+    private $apellido;
     private $nroDNI;
-    private $colorPelo;
-    private $peso;
     
-    public function __construct($nombrePers,$estaturaPers,$nroDNIPers,$colorPeloPers,$pesoPers)
+    
+    public function __construct($nombrePers,$apellido,$nroDNIPers,)
     {
         $this->nombre = $nombrePers;
-        $this->estatura = $estaturaPers;
+        $this->apellido = $apellido;
         $this->nroDNI = $nroDNIPers;
-        $this->colorPelo = $colorPeloPers;
-        $this->peso = $pesoPers;
+       
     }
 
-    public function getNombre(){
+    
+    /**
+     * Get the value of nombre
+     */ 
+    public function getNombre()
+    {
         return $this->nombre;
     }
-    public function getNumeroDNI(){
+
+    /**
+     * Set the value of nombre
+     *
+     * @return  self
+     */ 
+    public function setNombre($nombre)
+    {
+        $this->nombre = $nombre;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of apellido
+     */ 
+    public function getApellido()
+    {
+        return $this->apellido;
+    }
+
+    /**
+     * Set the value of apellido
+     *
+     * @return  self
+     */ 
+    public function setApellido($apellido)
+    {
+        $this->apellido = $apellido;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of nroDNI
+     */ 
+    public function getNroDNI()
+    {
         return $this->nroDNI;
     }
-    public function getPeso(){
-        return $this->peso;
-    }
-    public function getColorDePelo(){
-        return $this->colorPelo;
-    }
-    public function getEstatura(){
-        return $this->estatura;
-    }
 
-    public function correr ($timeRecorrido){
-        $this->peso = $this->peso - $timeRecorrido;
-        return $this->peso;
-    }
-
-    public function comer($caloriasIngeridas)
+    /**
+     * Set the value of nroDNI
+     *
+     * @return  self
+     */ 
+    public function setNroDNI($nroDNI)
     {
-        return ($this->peso = $this->peso + $caloriasIngeridas);
+        $this->nroDNI = $nroDNI;
+
+        return $this;
     }
+    
+   
+
 
     public function __toString()
     {
-        return ("Nombre y Apellido ".$this->nombre."\nSu numero de DNI es ".$this->nroDNI."\n Su estatura es de ".$this->estatura."\n tiene un peso de ".$this->peso."\n Color de Pelo es ".$this->colorPelo);
-        
+        $str = "Nombre: ".$this->getNombre()."\n
+                DNI: ".$this->getNroDNI()."\n
+                Apellido: ".$this->getApellido()."\n";
+      
+        return $str;
     }
 
     public function __destruct()
@@ -55,14 +94,10 @@ class Persona {
         echo $this . "\n La persona a fallecido \n";
         
     }
+}
      
-};
 
 
-$persona = new Persona("Laureano Luna", 1.73, 38232325, "Castaño Claro", 72);
 
-$persona->comer(3);
-$persona->correr(0.5);
 
-$persona2 = new Persona("Antonella Giacone",1.73, 36841599,"Castaño",60);
 
