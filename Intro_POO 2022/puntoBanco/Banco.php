@@ -91,7 +91,17 @@ class Banco{
         return $mostradorIdeal;
     }
 
-    
+    public function Atender($objPersona)
+    {
+        $tramite=$this->getObjMostrador()->getObjPersona()->getObjTramite()->getTipoTramite();
+        
+        if($this->MejorMostradorPara($tramite)){
+            $mostrador = $this->getObjMostrador();
+            $idMostrador = 
+            $mostrador[]
+
+        }
+    }
 
 
 
