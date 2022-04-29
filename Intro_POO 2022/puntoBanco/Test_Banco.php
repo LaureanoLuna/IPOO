@@ -12,6 +12,13 @@ $objMostrador->setPersEnCola($objPersona);
 $objBanco = new Banco("Nacion",$objMostrador,$objPersona);
 
 
+//echo $objBanco;
+$objPersona2 = new PersonaT("Ivan","Luna","36585255",new Tramite("Pension"));
+if ($objBanco->atender($objPersona2)){
+
+    echo "\nse realizo !!!\n";
+}
+
 echo $objBanco;
 
 

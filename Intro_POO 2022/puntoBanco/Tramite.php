@@ -9,8 +9,8 @@ class Tramite{
     public function __construct($tramite)
     {
         $this->tipoTramite = $tramite;
-        $this->horaCreacion;
-        $this->horaResolucion;
+        $this->horaCreacion = "";
+        $this->horaResolucion = "";
         
     }
 

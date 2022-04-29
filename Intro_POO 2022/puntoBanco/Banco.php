@@ -101,6 +101,7 @@ class Banco{
 
     public function MejorMostradorPara($unTramite)
     {
+        $mostradorMasVacio = null;
         $objMostradorQueAtienden = $this->MostradorQueAtiende($unTramite);
         $pivote = Mostrador::getCantPersCola();
         foreach ($objMostradorQueAtienden as $key => $value) {
@@ -108,7 +109,8 @@ class Banco{
             if($persEnLaFila < $pivote){
                 $mostradorMasVacio = $value;
             }else{
-                $mostradorMasVacio = null;
+               
+                $mostradorMasVacio = "!!!";
             }
             
         }
@@ -118,11 +120,12 @@ class Banco{
 
     public function atender($unCliente)
     {
-       $tipoTramite =  $unCliente->getObjTramite()->getTipoTramite();
+       $tipoTramite =  $unCliente->getObjTramite();
+      $unTramite = $tipoTramite->getTipoTramite();
 
-       if ($this->MejorMostradorPara($tipoTramite) <> null){
+       if ($this->MejorMostradorPara($unTramite) == null){
 
-            $mostrador =$this->MejorMostradorPara($tipoTramite);
+            $mostrador =$this->MejorMostradorPara($tipoTramite->getTipoTramite());
             $mostrador-> SumarPersCola($unCliente);
             return true;
        }else {
