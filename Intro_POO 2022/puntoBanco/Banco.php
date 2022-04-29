@@ -2,14 +2,38 @@
 
 class Banco{
 
+    private $nombreBanco;
     private $objMostrador;
-    private $numBanco;
+    private $objPersona;
 
-    public function __construct($bancoNum)
+    public function __construct($nombreBanco,$objMostrador,$objPersona)
     {
-        $this->objMostrador;
-        $this->numBanco = $bancoNum;
-        
+        $this->nombreBanco = $nombreBanco;
+        $this->objMostrador = $objMostrador;
+        $this->objPersona = $objPersona ;        
+    }
+
+    
+        //METODOS DE ACCESO DEL OBJETO
+
+    /**
+     * Get the value of nombreBanco
+     */ 
+    public function getNombreBanco()
+    {
+        return $this->nombreBanco;
+    }
+
+    /**
+     * Set the value of nombreBanco
+     *
+     * @return  self
+     */ 
+    public function setNombreBanco($nombreBanco)
+    {
+        $this->nombreBanco = $nombreBanco;
+
+        return $this;
     }
 
     /**
@@ -31,95 +55,79 @@ class Banco{
 
         return $this;
     }
-    
+
     /**
-     * Get the value of numBanco
+     * Get the value of objPersona
      */ 
-    public function getNumBanco()
+    public function getObjPersona()
     {
-        return $this->numBanco;
+        return $this->objPersona;
     }
 
     /**
-     * Set the value of numBanco
+     * Set the value of objPersona
      *
      * @return  self
      */ 
-    public function setNumBanco($numBanco)
+    public function setObjPersona($objPersona)
     {
-        $this->numBanco = $numBanco;
+        $this->objPersona = $objPersona;
 
         return $this;
     }
 
-    public function CreacionMostrador($tramite)
+    public function __toString()
     {
-        $mostrador = $this->getObjMostrador();
-        $mostrador[]= new Mostrador($tramite);
-        $this->setObjMostrador($mostrador);
+        $str = "{$this->getNombreBanco()}\n{$this->getObjMostrador()}}";
 
-        return true;
+        return $str;
     }
 
-    public function QueMostradorAtiendeTramite($unTramite)
+    public function MostradorQueAtiende($unTramite)
     {
         $objMostrador = $this->getObjMostrador();
+        $mostradoresQueAtienden = [];
         foreach ($objMostrador as $key => $value) {
-            if ($objMostrador->getTipo_Tramite() == $unTramite){
-                $mostradoresDisponibles[] = $value;
+            $tramite = $value->getTipo_Tramite();
+            if ($tramite == $unTramite){
+
+                $mostradoresQueAtienden[] = $value; 
             }
+
         }
 
-        return $mostradoresDisponibles;
+        return $mostradoresQueAtienden;
     }
 
     public function MejorMostradorPara($unTramite)
     {
-        $mostradores = $this->QueMostradorAtiendeTramite($unTramite);
-        $pivote = $mostradores->getCantPersCola;
-        foreach ($mostradores as $key => $value){
-            $cantPers = count($value->getPersEnCola());
-            if ($cantPers < $pivote){
-                $pivote = $cantPers;
-                $mostradorIdeal = $value;
+        $objMostradorQueAtienden = $this->MostradorQueAtiende($unTramite);
+        $pivote = Mostrador::getCantPersCola();
+        foreach ($objMostradorQueAtienden as $key => $value) {
+            $persEnLaFila = $value->getPersEnCola();
+            if($persEnLaFila < $pivote){
+                $mostradorMasVacio = $value;
+            }else{
+                $mostradorMasVacio = null;
             }
-            else{
-                $mostradorIdeal = null;
-            }
+            
         }
 
-        return $mostradorIdeal;
+        return $mostradorMasVacio;        
     }
 
-    public function Atender($objPersona)
+    public function atender($unCliente)
     {
-        $tramite=$this->getObjMostrador()->getObjPersona()->getObjTramite()->getTipoTramite();
-        
-        if($this->MejorMostradorPara($tramite)){
-            $mostrador = $this->getObjMostrador();
-            $idMostrador = 
-            $mostrador[]
+       $tipoTramite =  $unCliente->getObjTramite()->getTipoTramite();
 
-        }
-    }
+       if ($this->MejorMostradorPara($tipoTramite) <> null){
 
-
-
-    public function StringMostrador()
-    {
-        $mostrador = $this->getObjMostrador();
-        foreach ($mostrador as $key => $value) {
-            return $value;
-        }
-    }
-
-    public function __toString()
-    {
-        $str = "Banco N° ". $this->getNumBanco()."\n
-                Cantidad de Mostradores: ". $this->StringMostrador()."\n";
+            $mostrador =$this->MejorMostradorPara($tipoTramite);
+            $mostrador-> SumarPersCola($unCliente);
+            return true;
+       }else {
+            return false;
+       }
     }
 
 }
-
-
-?>

@@ -5,14 +5,13 @@ class Mostrador{
 
     private $idMostrador;// atributo de identificacion de el objeto
     private $tipo_Tramite;// atributo tipo arreglo con la identificacion de los tramites que realiza
-    static private $cantPersCola = 5;// atributo tipo intiger con la cantidad limites de personas por mostrador
+    private static $cantPersCola = 5;// atributo tipo intiger con la cantidad limites de personas por mostrador
     private $persEnCola;
 
-    public function __construct($tramites)
+    public function __construct($idMostrador,$tramites)
     {
-        $this->idMostrador = 0;
-        $this->tipo_Tramite = $tramites;
-        $this->cantPersCola;
+        $this->idMostrador = $idMostrador;
+        $this->tipo_Tramite = $tramites;        
         $this->persEnCola;        
     }
 
@@ -61,9 +60,9 @@ class Mostrador{
     /**
      * Get the value of cantPersCola
      */ 
-    public function getCantPersCola()
+    public static function getCantPersCola()
     {
-        return $this->cantPersCola;
+        return Mostrador::$cantPersCola;
     }
 
     /**
@@ -71,11 +70,9 @@ class Mostrador{
      *
      * @return  self
      */ 
-    public function setCantPersCola($cantPersCola)
+    public static function setCantPersCola($cantPersCola)
     {
-        $this->cantPersCola = $cantPersCola;
-
-        return $this;
+        return Mostrador::$cantPersCola = $cantPersCola;        
     }
     /**
      * Get the value of persEnCola
@@ -112,7 +109,7 @@ class Mostrador{
             $bool = false;
         }
         else{
-            $bool =true;
+            $bool = true;
         }
         return $bool;
     }
@@ -125,7 +122,7 @@ class Mostrador{
 
     public function SumarPersCola($objpers)
     {
-        $colaPers = $this->getPersEnCola();
+        $colaPers = Mostrador::getPersEnCola();
        
         if ($this->estaLLeno_o_No()){
             $colaPers[]=$objpers;
@@ -148,11 +145,12 @@ class Mostrador{
     public function StringTramites()//
     {   
         $strTramites = "";// Inicializamos la variable del tipo string 
-        $objTramites = $this->getTipo_Tramite();//recuperamos los datos del atributo
-        foreach ($objTramites as $key) {// recorremos cada objeto
+        $arrayTramites = $this->getTipo_Tramite();//recuperamos los datos del atributo
+       foreach ($arrayTramites as $key=> $value) {
             
-             $strTramites .= $key."\n";// concatenamos y almacenamos en la variable, cada string con los valores del objeto almacenados
-        }
+            $strTramites.= $value."\n";
+       } 
+        
 
         return $strTramites;// retornamos la variable con todos los valores concatenados del atributo 
     }
@@ -169,16 +167,17 @@ class Mostrador{
         $strPersona = "";//Incializamos las variable tipo string
         $objPersona = $this->getPersEnCola();// recuperamos los datos del atributo
         foreach ($objPersona as $key => $value) {//recorremos los datos del atributo
-            $strPersona .= $key."\n";//concatenamos y almacenamos en las variable, cada string con los valores del objeto Persona
+            $strPersona .= $value."\n";//concatenamos y almacenamos en las variable, cada string con los valores del objeto Persona
         }
         return $strPersona;//retornamos la variable con todos los valores del del objeto del atributos
     }
 
     public function __toString()
     {
+        print_r($this->StringPersona());
         $str = "Mostrador numero: ". $this->getIdMostrador()."\n
-                Realiza los siguientes tramites: ". $this->StringTramites()."\n
-                La cantidad de personas que estan en el mostrador son: ".count($this->getPersEnCola)."\n
+                Realiza los siguientes tramites: ". ($this->getTipo_Tramite()[0])."\n".
+                "La cantidad de personas que estan en el mostrador son: ".count($this->getPersEnCola())."\n
                 las cuales son: ". $this->StringPersona()."\n";
         
         return $str;
