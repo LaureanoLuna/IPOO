@@ -7,12 +7,12 @@ class Equipo{
     private $cantidadJugadores;
     private $objCategoriaEquipo;
 
-    public function __construct($nombreEquipo, $capitanEqui, $cantidadJugadores)
+    public function __construct($nombreEquipo, $capitanEqui, $cantidadJugadores, $objCategoria)
     {
         $this->nombre = $nombreEquipo;
         $this->capitanEquipo = $capitanEqui;
         $this->cantidadJugadores = $cantidadJugadores;
-        $this->objCategoriaEquipo;
+        $this->objCategoriaEquipo = $objCategoria;
     }
 
     /**
@@ -79,12 +79,25 @@ class Equipo{
 
     /**
      * Set the value of objCategoriaEquipo
-
+     *
+     * @return  self
      */ 
     public function setObjCategoriaEquipo($objCategoriaEquipo)
     {
         $this->objCategoriaEquipo = $objCategoriaEquipo;
 
+        return $this;
     }
-}
+
+    public function __toString()
+    {
+        $str =$this->getNombre().
+            "\nTiene ". $this->getCantidadJugadores()." jugadores\nEl Capitan es: ". $this->getCapitanEquipo().
+            "\nLa categoria es ". $this->getObjCategoriaEquipo();
+
+            return $str;
+    }
+
+    
+}   
 ?>

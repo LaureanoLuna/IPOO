@@ -9,14 +9,14 @@ class Partido{
     private $golEquipoA;
     private $golEquipoB;
 
-    public function __construct($idPartido, $fechaPartido)
+    public function __construct($idPartido, $fechaPartido, $equipoA,$equipoB,$golA,$golB)
     {
         $this->idPartido = $idPartido;
         $this->fechaPartido = $fechaPartido;
-        $this->golEquipoA = 0;
-        $this->golEquipoB = 0;
-        $this->objEquipoA;
-        $this->objEquipoB;        
+        $this->golEquipoA = $golA;
+        $this->golEquipoB = $golB;
+        $this->objEquipoA = $equipoA;
+        $this->objEquipoB = $equipoB;        
     }
 
     /**
@@ -123,20 +123,25 @@ class Partido{
 
     public function __toString()
     {
-        $str = "En el Partido n°". $this->getIdPartido().
-        "\nSe jugó el dia ". $this->getfechaPartido().
-        "\nEl equipo ". $this->getObjEquipoA(). " vs ". $this->getObjEquipoB().
-        "\n-------- ". $this->getGolEquipoA() ."  -  ". $this->getGolEquipoB()." ------- ";
+        $str = "\n En el Partido n°". $this->getIdPartido().
+        " Se jugó el dia ". $this->getfechaPartido().
+        "\n". $this->getObjEquipoA(). " 
+        \nGoles ". $this->getGolEquipoA().
+        "\n". $this->getObjEquipoB()."  
+        \nGoles ". $this->getGolEquipoB();
 
         return $str;
     }
 
-
-    public function agregarEquipo($objEquipo)
+    public function  coeficientePartido()
     {
-        $this->setObjEquipoA($objEquipo);
-        return true;
+        $coefEquipo = 0.5 * $this->getGolEquipoA() * $this->getObjEquipoA()->getcantidadJugadores();
+        $coefEquipo += 0.5 * $this->getGolEquipoB() * $this->getObjEquipoB()->getcantidadJugadores();
+        
+        return $coefEquipo;
     }
+
 }
+
 
 ?>
